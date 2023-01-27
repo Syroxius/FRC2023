@@ -1,3 +1,7 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -5,8 +9,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.Swerve;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,25 +22,19 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  */
 public class RobotContainer {
     /* Controllers */
-    private final CommandXboxController driver = new CommandXboxController(Constants.driverID);
-    private final CommandXboxController operator = new CommandXboxController(Constants.operatorID);
+    private final CommandXboxController driver = new CommandXboxController(0);
 
-    // Initialize AutoChooser Sendable
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
-    // Field Relative and openLoop Variables
-    boolean fieldRelative;
-    boolean openLoop;
-
-
     /* Subsystems */
+    private final Swerve s_Swerve = new Swerve();
 
-    /**
-     * The container for the robot. Contains subsystems, OI devices, and commands.
-     */
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver,
+            Constants.Swerve.isFieldRelative, Constants.Swerve.isOpenLoop));
+        // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
         SmartDashboard.putData("Choose Auto: ", autoChooser);
-        autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
         // Configure the button bindings
         configureButtonBindings();
     }
@@ -45,16 +45,19 @@ public class RobotContainer {
      * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    private void configureButtonBindings() {}
+    private void configureButtonBindings() {
+        /* Driver Buttons */
+        driver.y().whileTrue(new InstantCommand(() -> s_Swerve.resetFieldRelativeOffset()));
+    }
 
     /**
-     * Gets the user's selected autonomous command.
+     * Use this to pass the autonomous command to the main {@link Robot} class.
      *
-     * @return Returns autonomous command selected.
+     * @return the command to run in autonomous
      */
+
     public Command getAutonomousCommand() {
-        // return new P1_3B(swerveDrive, shooter, innerMagazine, outerMagazine, intake, turret,
-        // vision);
         return autoChooser.getSelected();
+
     }
 }
