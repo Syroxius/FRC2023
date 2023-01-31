@@ -1,10 +1,13 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import frc.lib.util.SwerveModuleConstants;
+import frc.lib.util.swerve.SwerveModuleConstants;
 
 /**
  * Constants file.
@@ -16,6 +19,40 @@ public final class Constants {
     public static final int OPERATOR_ID = 1;
 
     /**
+     * PID constants for Swerve Auto Holonomic Drive Controller
+     */
+    public static class SwerveTransformPID {
+        public static final double pidXkP = 1.5;
+        public static final double pidXkI = 0.0;
+        public static final double pidXkD = 0.0;
+        public static final double pidYkP = 1.5;
+        public static final double pidYkI = 0.0;
+        public static final double pidYkD = 0.0;
+        public static final double pidTkP = 3.0;
+        public static final double pidTkI = 0.0;
+        public static final double pidTkD = 0.0;
+
+        public static final double maxAngularVelocity = 3.0;
+        public static final double maxAngularAcceleration = 3.0;
+        public static final double stdDevMod = 2.0;
+    }
+
+    /**
+     * Camera offset constants
+     */
+    public static class CameraConstants {
+
+        public static final double pitch = 0 * Math.PI / 180;
+        public static final double roll = Math.PI;
+        public static final double yaw = 0.0;
+        public static final Transform3d kCameraToRobot =
+            new Transform3d(new Translation3d(Units.inchesToMeters(-10), Units.inchesToMeters(0),
+                Units.inchesToMeters(-7.5)), new Rotation3d(roll, pitch, yaw));
+        public static final String cameraName = "pv2";
+        public static final double largestDistance = 0.1;
+    }
+
+    /**
      * Swerve ID's
      */
     public static final class Swerve {
@@ -24,9 +61,11 @@ public final class Constants {
         public static final boolean INVERT_GYRO = false; // Always ensure Gyro is CCW+ CW-
 
         /* Drivetrain Constants */
-        public static final double TRACK_WIDTH = Units.inchesToMeters(27);
-        public static final double WHEEL_BASE = Units.inchesToMeters(27);
-        public static final double WHEEL_DIAMETER = Units.inchesToMeters(3.94);
+        // Front-Back distance
+        public static final double TRACK_WIDTH = Units.inchesToMeters(14);
+        // Left-Right Distance
+        public static final double WHEEL_BASE = Units.inchesToMeters(14);
+        public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
         public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
         public static final boolean IS_FIELD_RELATIVE = true;
@@ -38,7 +77,7 @@ public final class Constants {
         public static final double DRIVE_GEAR_RATIO = (8.14 / 1.0); // 6.86:1
         public static final double ANGLE_GEAR_RATIO = (12.8 / 1.0); // 12.8:1
 
-        public static final SwerveDriveKinematics SWEREVE_KINEMATICS =
+        public static final SwerveDriveKinematics SWERVE_KINEMATICS =
             new SwerveDriveKinematics(new Translation2d(WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0),
                 new Translation2d(WHEEL_BASE / 2.0, -TRACK_WIDTH / 2.0),
                 new Translation2d(-WHEEL_BASE / 2.0, TRACK_WIDTH / 2.0),
@@ -102,7 +141,7 @@ public final class Constants {
         }
 
         /**
-         * Front Right Module - Module 1.
+         * Front Right Module - Module 1. PROBLEM CHILD
          */
         public static final class Mod1 {
             public static final int DRIVE_MOTOR_ID = 51;
