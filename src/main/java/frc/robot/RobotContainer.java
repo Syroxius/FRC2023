@@ -22,7 +22,8 @@ import frc.robot.subsystems.Swerve;
  */
 public class RobotContainer {
     /* Controllers */
-    private final CommandXboxController driver = new CommandXboxController(0);
+    private final CommandXboxController driver = new CommandXboxController(Constants.DRIVER_ID);
+    private final CommandXboxController operator = new CommandXboxController(Constants.OPERATOR_ID);
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -32,7 +33,7 @@ public class RobotContainer {
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
         s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver,
-            Constants.Swerve.isFieldRelative, Constants.Swerve.isOpenLoop));
+            Constants.Swerve.IS_FIELD_RELATIVE, Constants.Swerve.IS_OPEN_LOOP));
         // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
         SmartDashboard.putData("Choose Auto: ", autoChooser);
         // Configure the button bindings

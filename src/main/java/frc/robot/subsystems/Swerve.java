@@ -39,7 +39,7 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(2, Constants.Swerve.Mod2.constants),
             new SwerveModule(3, Constants.Swerve.Mod3.constants)};
 
-        swerveOdometry = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics, getYaw(),
+        swerveOdometry = new SwerveDrivePoseEstimator(Constants.Swerve.SWEREVE_KINEMATICS, getYaw(),
             getPositions(), new Pose2d());
     }
 
@@ -52,7 +52,7 @@ public class Swerve extends SubsystemBase {
         swerveMods[2].setDesiredState(new SwerveModuleState(2, Rotation2d.fromDegrees(-45)), false);
         swerveMods[3].setDesiredState(new SwerveModuleState(2, Rotation2d.fromDegrees(-135)),
             false);
-        this.setMotorsZero(Constants.Swerve.isOpenLoop, Constants.Swerve.isFieldRelative);
+        this.setMotorsZero(Constants.Swerve.IS_OPEN_LOOP, Constants.Swerve.IS_FIELD_RELATIVE);
     }
 
     /**
@@ -67,11 +67,11 @@ public class Swerve extends SubsystemBase {
         boolean isOpenLoop) {
 
         SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(fieldRelative
+            Constants.Swerve.SWEREVE_KINEMATICS.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(),
                     rotation, Rotation2d.fromDegrees(getYaw().getDegrees() - fieldOffset))
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.MAX_SPEED);
 
         for (SwerveModule mod : swerveMods) {
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
@@ -86,7 +86,7 @@ public class Swerve extends SubsystemBase {
      */
     public void setMotorsZero(boolean isOpenLoop, boolean fieldRelative) {
         SwerveModuleState[] swerveModuleStates =
-            Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+            Constants.Swerve.SWEREVE_KINEMATICS.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, getYaw())
                     : new ChassisSpeeds(0, 0, 0));
 
@@ -102,7 +102,7 @@ public class Swerve extends SubsystemBase {
      * @param desiredStates The desired states of the swerve modules
      */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.MAX_SPEED);
 
         for (SwerveModule mod : swerveMods) {
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -159,13 +159,13 @@ public class Swerve extends SubsystemBase {
      */
     public Rotation2d getYaw() {
         float yaw = gyro.getYaw();
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(-yaw)
+        return (Constants.Swerve.INVERT_GYRO) ? Rotation2d.fromDegrees(-yaw)
             : Rotation2d.fromDegrees(yaw);
     }
 
     public String getStringYaw() {
         float yaw = gyro.getYaw();
-        return (Constants.Swerve.invertGyro) ? "Yaw: " + (360 - yaw) : "Yaw: " + yaw;
+        return (Constants.Swerve.INVERT_GYRO) ? "Yaw: " + (360 - yaw) : "Yaw: " + yaw;
     }
 
     @Override
