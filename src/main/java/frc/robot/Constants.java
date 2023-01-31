@@ -19,37 +19,53 @@ public final class Constants {
     public static final int OPERATOR_ID = 1;
 
     /**
-     * PID constants for Swerve Auto Holonomic Drive Controller
+     * LED constants
      */
-    public static class SwerveTransformPID {
-        public static final double pidXkP = 1.5;
-        public static final double pidXkI = 0.0;
-        public static final double pidXkD = 0.0;
-        public static final double pidYkP = 1.5;
-        public static final double pidYkI = 0.0;
-        public static final double pidYkD = 0.0;
-        public static final double pidTkP = 3.0;
-        public static final double pidTkI = 0.0;
-        public static final double pidTkD = 0.0;
-
-        public static final double maxAngularVelocity = 3.0;
-        public static final double maxAngularAcceleration = 3.0;
-        public static final double stdDevMod = 2.0;
+    public static final class LEDConstants {
+        public static final int PWMPort = 0;
+        public static final int LEDCount = 42;
     }
 
     /**
-     * Camera offset constants
+     * Motor CAN id's. PID constants for Swerve Auto Holonomic Drive Controller
+     */
+    public static class SwerveTransformPID {
+        public static final double PID_XKP = 1.5;
+        public static final double PID_XKI = 0.0;
+        public static final double PID_XKD = 0.0;
+        public static final double PID_YKP = 1.5;
+        public static final double PID_YKI = 0.0;
+        public static final double PID_YKD = 0.0;
+        public static final double PID_TKP = 3.0;
+        public static final double PID_TKI = 0.0;
+        public static final double PID_TKD = 0.0;
+
+        public static final double MAX_ANGULAR_VELOCITY = 3.0;
+        public static final double MAX_ANGULAR_ACCELERATION = 3.0;
+        public static final double STD_DEV_MOD = 2.0;
+    }
+
+    /**
+     * \ Camera offset constants
      */
     public static class CameraConstants {
 
-        public static final double pitch = 0 * Math.PI / 180;
-        public static final double roll = Math.PI;
-        public static final double yaw = 0.0;
-        public static final Transform3d kCameraToRobot =
+        public static final double ROLL = Math.PI;
+        public static final double PITCH = 0 * Math.PI / 180;
+        public static final double YAW = 0.0;
+        public static final Transform3d KCAMERA_TO_ROBOT =
             new Transform3d(new Translation3d(Units.inchesToMeters(-10), Units.inchesToMeters(0),
-                Units.inchesToMeters(-7.5)), new Rotation3d(roll, pitch, yaw));
-        public static final String cameraName = "pv2";
-        public static final double largestDistance = 0.1;
+                Units.inchesToMeters(-7.5)), new Rotation3d(ROLL, PITCH, YAW));
+        public static final String CAMERA_NAME = "pv2";
+        public static final double LARGEST_DISTANCE = 0.1;
+    }
+
+    /**
+     * LEDs subsystem constants.
+     */
+    public static final class LEDsConstants {
+        public static final int PWM_PORT = 9;
+        public static final int LED_COUNT = 42;
     }
 
     /**

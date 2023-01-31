@@ -26,7 +26,7 @@ import frc.robot.Constants;
 public class Swerve extends SubsystemBase {
     private AHRS gyro = new AHRS(Constants.Swerve.navXID);
     private SwerveDrivePoseEstimator swerveOdometry;
-    private PhotonCamera cam = new PhotonCamera(Constants.CameraConstants.cameraName);
+    private PhotonCamera cam = new PhotonCamera(Constants.CameraConstants.CAMERA_NAME);
     private SwerveModule[] swerveMods;
     private double fieldOffset = gyro.getYaw();
     private final Field2d field = new Field2d();
@@ -169,7 +169,7 @@ public class Swerve extends SubsystemBase {
                 if (aprilTagPose != null) {
                     var camPose = aprilTagPose.transformBy(camToTargetTrans.inverse());
                     var robotPose =
-                        camPose.transformBy(Constants.CameraConstants.kCameraToRobot).toPose2d();
+                        camPose.transformBy(Constants.CameraConstants.KCAMERA_TO_ROBOT).toPose2d();
                     swerveOdometry.resetPosition(getYaw(), getPositions(), robotPose);
                     SmartDashboard.putNumberArray("Initial Position",
                         new double[] {robotPose.getX(), robotPose.getY()});
@@ -185,14 +185,14 @@ public class Swerve extends SubsystemBase {
             if (aprilTagPose != null) {
                 var camPose = aprilTagPose.transformBy(camToTargetTrans.inverse());
                 var robotPose =
-                    camPose.transformBy(Constants.CameraConstants.kCameraToRobot).toPose2d();
+                    camPose.transformBy(Constants.CameraConstants.KCAMERA_TO_ROBOT).toPose2d();
                 pose2dList.add(robotPose);
                 if (robotPose.minus(getPose()).getTranslation()
-                    .getNorm() < Constants.CameraConstants.largestDistance) {
+                    .getNorm() < Constants.CameraConstants.LARGEST_DISTANCE) {
                     swerveOdometry.addVisionMeasurement(robotPose, imageCaptureTime,
-                        VecBuilder.fill(Constants.SwerveTransformPID.stdDevMod / target.getArea(),
-                            Constants.SwerveTransformPID.stdDevMod / target.getArea(),
-                            Constants.SwerveTransformPID.stdDevMod / target.getArea()));
+                        VecBuilder.fill(Constants.SwerveTransformPID.STD_DEV_MOD / target.getArea(),
+                            Constants.SwerveTransformPID.STD_DEV_MOD / target.getArea(),
+                            Constants.SwerveTransformPID.STD_DEV_MOD / target.getArea()));
                 }
             }
         }
