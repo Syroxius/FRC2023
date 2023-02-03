@@ -22,8 +22,8 @@ public final class Constants {
      * LED constants
      */
     public static final class LEDConstants {
-        public static final int PWMPort = 0;
-        public static final int LEDCount = 42;
+        public static final int PWMPort = 9;
+        public static final int LEDCount = 36;
     }
 
     /**
@@ -46,7 +46,7 @@ public final class Constants {
     }
 
     /**
-     * \ Camera offset constants
+     * Camera offset constants
      */
     public static class CameraConstants {
 
@@ -58,14 +58,6 @@ public final class Constants {
                 Units.inchesToMeters(-7.5)), new Rotation3d(ROLL, PITCH, YAW));
         public static final String CAMERA_NAME = "pv2";
         public static final double LARGEST_DISTANCE = 0.1;
-    }
-
-    /**
-     * LEDs subsystem constants.
-     */
-    public static final class LEDsConstants {
-        public static final int PWM_PORT = 9;
-        public static final int LED_COUNT = 42;
     }
 
     /**
