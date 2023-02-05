@@ -47,6 +47,7 @@ public class TeleopSwerve extends CommandBase {
         Translation2d translation =
             new Translation2d(yaxis, xaxis).times(Constants.Swerve.MAX_SPEED);
         double rotation = raxis * Constants.Swerve.MAX_ANGULAR_VELOCITY;
-        swerveDrive.drive(translation, rotation, fieldRelative, openLoop);
+        swerveDrive.driveWithTwist(translation, rotation, fieldRelative, openLoop);
+
     }
 }
