@@ -24,7 +24,7 @@ public class FireLEDs extends CommandBase {
      * @param cooling Indicates how fast a flame cools down. More cooling means shorter flames.
      * @param sparking Indicates the chance (out of 255) that a spark will ignite. A higher value
      *        makes the fire more active.
-     * @param speedDelay Delay in ms. Allows you to slow down the fire activity … a higher value
+     * @param speedDelay Delay in ms. Allows you to slow down the fire activity ... a higher value
      *        makes the flame appear slower
      */
     public FireLEDs(LEDs leds, int cooling, int sparking, int speedDelay) {
