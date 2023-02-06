@@ -103,7 +103,7 @@ public class SwerveModule {
     /**
      *
      *
-     * @param rotationSpeed Drive motor speed (-1 <= value <= 1)
+     * @param rotationSpeed Drive motor speed (-1 &lt;= value &lt;= 1)
      */
     public void setTurnAngle(double rotationSpeed) {
         double absolutePosition = Conversions.degreesToFalcon(
