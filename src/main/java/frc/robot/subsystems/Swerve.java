@@ -64,8 +64,7 @@ public class Swerve extends SubsystemBase {
 
     /**
      * Moves the swerve drive train, creates twist2d that accounts for the fact that positions are
-     * not updated continuously,
-     * (updated every .02 seconds.)
+     * not updated continuously, (updated every .02 seconds.)
      *
      * @param translation The 2d translation in the X-Y plane
      * @param rotation The amount of rotation in the Z axis

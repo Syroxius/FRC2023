@@ -37,15 +37,15 @@ public class SwerveModule {
         angleOffset = constants.angleOffset;
 
         /* Angle Encoder Config */
-        angleEncoder = new CANCoder(constants.cancoderID);
+        angleEncoder = new CANCoder(constants.cancoderID, "canivore");
         configAngleEncoder();
 
         /* Angle Motor Config */
-        angleMotor = new TalonFX(constants.angleMotorID);
+        angleMotor = new TalonFX(constants.angleMotorID, "canivore");
         configAngleMotor();
 
         /* Drive Motor Config */
-        driveMotor = new TalonFX(constants.driveMotorID);
+        driveMotor = new TalonFX(constants.driveMotorID, "canivore");
         configDriveMotor();
 
 
