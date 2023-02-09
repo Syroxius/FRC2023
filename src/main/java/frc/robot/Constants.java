@@ -103,9 +103,9 @@ public final class Constants {
 
         /* Drivetrain Constants */
         // Front-Back distance.
-        public static final double TRACK_WIDTH = Units.inchesToMeters(14);
+        public static final double TRACK_WIDTH = Units.inchesToMeters(22);
         // Left-Right Distance
-        public static final double WHEEL_BASE = Units.inchesToMeters(14);
+        public static final double WHEEL_BASE = Units.inchesToMeters(22);
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
         public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
