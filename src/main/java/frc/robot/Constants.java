@@ -38,8 +38,10 @@ public final class Constants {
      * Wrist constants.
      */
     public static final class WristConstants {
-        public static final int CAN_ID = 12;
-        public static final int INTAKE_MOTOR_CAN_ID = 13;
+        public static final int WRIST_CAN_ID = 12;
+        public static final int LEFT_INTAKE_MOTOR_CAN_ID = 13;
+        public static final int RIGHT_INTAKE_MOTOR_CAN_ID = 16;
+
     }
 
     /**
