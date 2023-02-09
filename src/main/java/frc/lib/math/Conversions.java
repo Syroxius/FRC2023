@@ -1,5 +1,7 @@
 package frc.lib.math;
 
+import edu.wpi.first.math.MathUtil;
+
 /**
  * Mathematical conversions for swerve calculations
  */
@@ -90,6 +92,29 @@ public class Conversions {
         return goal % 360;
     }
 
+    /**
+     * Apply a quadratic curve to swerve inputs.
+     *
+     * @param input Controller input
+     * @param deadband Controller deadband
+     * @return New curved input.
+     */
+    public static double applySwerveCurve(double input, double deadband) {
+        // For 0.2 Joystick Deadband:
+        // f(x)=0.625*x^2+0.5*x+-0.125
+        // For 0.1 Joystick Deadband:
+        // f(x)=0.778*x^2+0.256*x+-0.033
+
+        double processedInput = 0.0;
+
+        if (Math.abs(input) >= deadband) {
+            processedInput =
+                (0.778 * Math.pow(Math.abs(input), 2) + 0.256 * Math.abs(input) - 0.033);
+            processedInput = Math.copySign(processedInput, input);
+        }
+        return MathUtil.clamp(processedInput, -1, 1);
+
+    }
 
     /**
      * Generate a random number between and upper and lower bound
