@@ -14,9 +14,47 @@ CAN Spark Max 12 - Wrist
 
 CAN Spark Max 13 - Wrist Intake
 
-CAN Spark Max 14 - Dropdown Intake -- Dropdown Motor
+CAN Spark Max 14 - Left Dropdown Intake -- Dropdown Motor
 
-CAN Spark Max 15 - Dropdown Intake -- Intake Motor
+CAN Spark Max 15 - Right Dropdown Intake -- Dropdown Motor
+
+CAN Spark Max 16 - Dropdown Intake -- Intkake Motor
+
+## **PDH Ports**
+
+0 - Front Right Module Angle Motor
+
+1 - Left Drop Down Intake Motor
+
+2 - Left Arm Motor
+
+3 - Front Right Module Drive Motor
+
+4 - Back Left Module Drive Motor
+
+5 - Back Left Module Angle Motor
+
+6 - Front Left Module Drive Motor
+
+7 - Back Right Module Angle Motor
+
+8 - Backk Right Module Drive Motor
+
+9 - Front Left Module Angle Motor
+
+10 - Right Arm Motor
+
+11 - Right Dropdown Intake motor
+
+12 - Left Grabber Intake Motor
+
+13 - Elevator Motor
+
+14 - Right Grabber Intake Motor
+
+15 - Wrist Motor
+
+16 - Dropdown Intake Wheel Motor
 
 ## **Controls:**
 
