@@ -20,48 +20,6 @@ public final class Constants {
     public static final int OPERATOR_ID = 1;
 
     /**
-     * Arm constants.
-     */
-    public static final class ArmConstant {
-        public static final int LEFT_SIDE_CAN_ID = 9;
-        public static final int RIGHT_SIDE_CAN_ID = 10;
-    }
-
-    /**
-     * Elevator constants.
-     */
-    public static final class ElevatorConstants {
-        public static final int CAN_ID = 11;
-    }
-
-    /**
-     * Wrist constants.
-     */
-    public static final class WristConstants {
-        public static final int WRIST_CAN_ID = 12;
-        public static final int LEFT_INTAKE_MOTOR_CAN_ID = 13;
-        public static final int RIGHT_INTAKE_MOTOR_CAN_ID = 16;
-
-    }
-
-    /**
-     * Wrist constants.
-     */
-    public static final class DropdownIntake {
-        public static final int DROPDOWN_MOTOR_CAN_ID = 14;
-        public static final int INTAKE_MOTOR_CAN_ID = 15;
-    }
-
-
-    /**
-     * LED constants.
-     */
-    public static final class LEDConstants {
-        public static final int PWM_PORT = 9;
-        public static final int LED_COUNT = 36;
-    }
-
-    /**
      * Motor CAN id's. PID constants for Swerve Auto Holonomic Drive Controller.
      */
     public static class SwerveTransformPID {
@@ -219,5 +177,74 @@ public final class Constants {
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
 
+    }
+
+    /**
+     * Arm constants.
+     */
+    public static final class ArmConstant {
+        public static final int LEFT_SIDE_CAN_ID = 9;
+        public static final int RIGHT_SIDE_CAN_ID = 10;
+    }
+
+    /**
+     * Elevator constants.
+     */
+    public static final class ElevatorConstants {
+        public static final int CAN_ID = 11;
+    }
+
+    /**
+     * Constants for the wrist.
+     */
+    public static final class Wrist {
+        public static final int WRIST_CAN_ID = 12;
+        public static final int LEFT_MOTOR_ID = 13;
+        public static final int RIGHT_MOTOR_ID = 16;
+        public static final int CONE_SENSOR_ID_UPPER = 0;
+        public static final int CONE_SENSOR_ID_LOWER = 1;
+        public static final int CUBE_SENSOR_ID_UPPER = 2;
+        public static final int CUBE_SENSOR_ID_LOWER = 3;
+
+        public static final double INTAKE_SPEED = 1;
+        public static final int INTAKE_STOP_SPEED = 0;
+        public static final double INTAKE_RELEASE_SPEED = -1;
+        public static final double INTAKE_PANIC_SPEED = -1;
+    }
+
+    /**
+     * Constants for the dropdown intake.
+     */
+    public static final class DropDownIntake {
+        public static final int LEFT_DROP_MOTOR_ID = 14;
+        public static final int RIGHT_DROP_MOTOR_ID = 15;
+        public static final int DROP_ENCODER_ID = 4;
+        public static final int INTAKE_MOTOR_ID = 17;
+
+        public static final double INTAKE_SPEED = 0.3;
+        public static final double SPIT_SPEED = -0.1;
+        public static final double DROP_VOLTS = 0.5;
+        public static final double RETRACT_VOLTS = -1.5;
+        public static final int STOP_VOLTS = 0;
+
+        /**
+         * PID Constants for the Drop Down Intake motors
+         */
+        public static final class PID {
+            public static final double KP = 0.0;
+            public static final double KI = 0.0;
+            public static final double KD = 0.0;
+            public static final double KS = 0.0;
+            public static final double KG = 0.0;
+            public static final double KV = 0.0;
+        }
+    }
+
+    /**
+     * LED constants.
+     */
+    public static final class LEDConstants {
+        public static final int PWM_PORT = 9;
+        public static final int LED_COUNT = 36;
     }
 }
