@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,15 +21,24 @@ public class WristIntake extends SubsystemBase {
         new CANSparkMax(Constants.Wrist.RIGHT_MOTOR_ID, MotorType.kBrushless);
     private final MotorControllerGroup wristIntakeMotors =
         new MotorControllerGroup(leftWristMotor, rightWristMotor);
+    private final DoubleSolenoid wristSolenoid;
+
 
     private final DigitalInput coneSensor1 = new DigitalInput(Constants.Wrist.CONE_SENSOR_ID_UPPER);
     private final DigitalInput coneSensor2 = new DigitalInput(Constants.Wrist.CONE_SENSOR_ID_LOWER);
     private final DigitalInput cubeSensor1 = new DigitalInput(Constants.Wrist.CUBE_SENSOR_ID_UPPER);
     private final DigitalInput cubeSensor2 = new DigitalInput(Constants.Wrist.CUBE_SENSOR_ID_LOWER);
 
-    public WristIntake() {
+    /**
+     * Create Wrist Intake Subsystem
+     *
+     * @param ph Pnuematic Hub instance
+     */
+    public WristIntake(PneumaticHub ph) {
         leftWristMotor.setInverted(true);
-        wristIntakeMotors.setInverted(true);
+        this.wristSolenoid = ph.makeDoubleSolenoid(Constants.Wrist.SOLENOID_FORWARD_CHANNEL,
+            Constants.Wrist.SOLENOID_REVERSE_CHANNEL);
+        this.wristSolenoid.set(Value.kForward);
     }
 
     // Runs wrist intake motor to intake a game piece.
@@ -58,5 +70,26 @@ public class WristIntake extends SubsystemBase {
     // Get and return the status of the cube sensors.
     public boolean getCubeSensor() {
         return cubeSensor1.get() && cubeSensor2.get();
+    }
+
+    /**
+     * Actuate solenoids
+     */
+    public void toggleSolenoid() {
+        this.wristSolenoid.toggle();
+    }
+
+    /**
+     * Open grabber
+     */
+    public void openGrabber() {
+        this.wristSolenoid.set(Value.kForward);
+    }
+
+    /**
+     * Close grabber
+     */
+    public void closeGrabber() {
+        this.wristSolenoid.set(Value.kReverse);
     }
 }

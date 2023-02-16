@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -35,6 +36,7 @@ public class RobotContainer {
     private final CommandXboxController operator = new CommandXboxController(Constants.OPERATOR_ID);
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+    public PneumaticHub ph = new PneumaticHub();
 
     // Field Relative and openLoop Variables
     boolean fieldRelative;
@@ -46,11 +48,13 @@ public class RobotContainer {
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final DropIntake dIntake = new DropIntake();
-    private final WristIntake wrist = new WristIntake();
+    private final WristIntake wrist;
     // public DigitalInput testSensor = new DigitalInput(0);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+        ph.enableCompressorAnalog(90, 120);
+        wrist = new WristIntake(ph);
         s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver,
             Constants.Swerve.IS_FIELD_RELATIVE, Constants.Swerve.IS_OPEN_LOOP));
         // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
@@ -102,6 +106,8 @@ public class RobotContainer {
         driver.b().whileTrue(new LowerDDIntake(dIntake));
         driver.a().whileTrue(new RaiseDDIntake(dIntake));
         driver.x().whileTrue(new WristIntakeIn(wrist));
+
+        operator.a().onTrue(new InstantCommand(() -> this.wrist.toggleSolenoid()));
     }
 
     /**
