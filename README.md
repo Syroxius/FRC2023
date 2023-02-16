@@ -14,11 +14,11 @@ CAN Spark Max 12 - Wrist
 
 CAN Spark Max 13 - Wrist Left Intake
 
+CAN Spark Max 14 - Dropdown Intake - Left Dropdown Motor
+
+CAN Spark Max 15 - Dropdown Intake - Right Dropdown Motor
+
 CAN Spark Max 16 - Wrist Right Intake
-
-CAN Spark Max 14 - Dropdown Intake -- Left Dropdown Motor
-
-CAN Spark Max 15 - Dropdown Intake -- Right Dropdown Motor
 
 CAN Spark Max 17 - Drop Down Intake - Intake Motor
 
