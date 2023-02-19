@@ -180,14 +180,6 @@ public final class Constants {
     }
 
     /**
-     * Arm constants.
-     */
-    public static final class ArmConstant {
-        public static final int LEFT_SIDE_CAN_ID = 9;
-        public static final int RIGHT_SIDE_CAN_ID = 10;
-    }
-
-    /**
      * Elevator constants.
      */
     public static final class ElevatorConstants {
@@ -250,4 +242,38 @@ public final class Constants {
         public static final int PWM_PORT = 9;
         public static final int LED_COUNT = 36;
     }
+
+    /**
+     * Constants that are necessary for the arm.
+     */
+    public static final class Arm {
+        public static final int ARM_ID = 9;
+        public static final int ARM_ID_2 = 10;
+        public static final int ENCODER_CHANNEL1 = 5;
+        public static final int ENCODER_CHANNEL2 = 6;
+        public static final double ENCODER_OFFSET = 0.0;
+        // this angle positions are not definite, just using them for testing
+        public static final int HOME_POSITION = 226;
+        public static final int SECOND_POSITION = 200;
+        public static final int THIRD_POSITION = 180;
+        public static final int FOURTH_POSITION = 160;
+        public static final int FIFTH_POSITION = 130;
+
+        /**
+         * Arm PID constants.
+         */
+        public static final class PID {
+            public static final double KP = 0.035;
+            public static final double KI = 0.0;
+            public static final double KD = 0.0;
+            public static final double KF = 0.0;
+            public static final double K_GVOLTS = 0.50;
+            public static final double K_SVOLTS = 0.0;
+            public static final double K_MAX_VELOCITY_RAD_PER_SECOND = 0.2;
+            public static final double K_MAX_ACCELERATION_RAD_PER_SEC_SQUARED = 0.2;
+            public static final double K_WVOLT_SECOND_PER_RAD = 0.0;
+            public static final double K_AVOLT_SECOND_SQUARED_PER_RAD = 0.0;
+        }
+    }
+
 }

@@ -23,15 +23,9 @@ public class MoveDDIntake extends CommandBase {
 
     @Override
     public void initialize() {
-        // intake.intakeConeDeploy();
         intake.enablePID();
         intake.setGoal(angle);
     }
-
-    // @Override
-    // public void end(boolean interrupt) {
-    // intake.stopDrop();
-    // }
 
     @Override
     public boolean isFinished() {
