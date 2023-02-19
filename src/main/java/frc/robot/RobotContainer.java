@@ -14,11 +14,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DisabledInstantCommand;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.dropintake.LowerDDIntake;
-import frc.robot.commands.dropintake.RaiseDDIntake;
+import frc.robot.commands.dropintake.MoveDDIntake;
 import frc.robot.commands.leds.PoliceLEDs;
 import frc.robot.commands.leds.RainbowLEDs;
-import frc.robot.commands.wrist.WristIntakeIn;
 import frc.robot.subsystems.DropIntake;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Swerve;
@@ -103,9 +101,10 @@ public class RobotContainer {
         driver.y().onTrue(new InstantCommand(
             () -> SmartDashboard.putString(" .get ABS: ", dIntake.getAngleMeasurement() + " ")));
 
-        driver.b().whileTrue(new LowerDDIntake(dIntake));
-        driver.a().whileTrue(new RaiseDDIntake(dIntake));
-        driver.x().whileTrue(new WristIntakeIn(wrist));
+        driver.b().whileTrue(new MoveDDIntake(dIntake, dIntake.position1));
+        driver.a().whileTrue(new MoveDDIntake(dIntake, dIntake.position2));
+        driver.x().whileTrue(new MoveDDIntake(dIntake, dIntake.position3));
+        // driver.x().whileTrue(new WristIntakeIn(wrist));
 
         operator.a().onTrue(new InstantCommand(() -> this.wrist.toggleSolenoid()));
     }
