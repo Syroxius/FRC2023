@@ -230,7 +230,7 @@ public final class Constants {
             public static final double KI = 0.0;
             public static final double KD = 0.0;
             public static final double KS = 0.0;
-            public static final double KG = 1.2;
+            public static final double KG = 1.1;
             public static final double KV = 0.0;
         }
     }

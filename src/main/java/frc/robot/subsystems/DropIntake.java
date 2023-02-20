@@ -27,7 +27,7 @@ public class DropIntake extends SubsystemBase {
         new ArmFeedforward(Constants.DropDownIntake.PID.KS, Constants.DropDownIntake.PID.KG,
             Constants.DropDownIntake.PID.KV);
     private final ArmFeedforward feedforwardRight =
-        new ArmFeedforward(Constants.DropDownIntake.PID.KS, Constants.DropDownIntake.PID.KG * .55,
+        new ArmFeedforward(Constants.DropDownIntake.PID.KS, Constants.DropDownIntake.PID.KG * .556,
             Constants.DropDownIntake.PID.KV);
 
     private final double dropEncoderOffset = 214.6783500;
