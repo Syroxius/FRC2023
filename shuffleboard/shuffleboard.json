@@ -746,6 +746,19 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "2,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/ .get ABS: ",
+              "_title": " .get ABS: ",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -1371,17 +1384,19 @@
               "_showGlyph": false
             }
           },
-          "10,5": {
+          "9,4": {
             "size": [
-              2,
-              2
+              1,
+              1
             ],
             "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Wrist Encoder",
-              "_title": "/SmartDashboard/Wrist Encoder",
+              "_type": "Boolean Box",
+              "_source0": "network_table:///photonvision/pv2/hasTarget",
+              "_title": "/photonvision/pv2/hasTarget",
               "_glyph": 148,
-              "_showGlyph": false
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
             }
           }
         }
