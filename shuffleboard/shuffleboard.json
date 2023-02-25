@@ -694,6 +694,58 @@
               "Visuals/Robot Icon Size": 50.0,
               "Visuals/Show Outside Circles": false
             }
+          },
+          "13,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Gyro roll",
+              "_title": "Gyro roll",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/PID Voltage",
+              "_title": "PID Voltage",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/FF Voltage",
+              "_title": "FF Voltage",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Wrist Encoder",
+              "_title": "Wrist Encoder",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -1289,6 +1341,45 @@
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Robot Rotation",
               "_title": "SmartDashboard/Robot Rotation",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "2,5": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/FF Voltage",
+              "_title": "SmartDashboard/FF Voltage",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "6,5": {
+            "size": [
+              4,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/PID Voltage",
+              "_title": "SmartDashboard/PID Voltage",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "10,5": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Wrist Encoder",
+              "_title": "/SmartDashboard/Wrist Encoder",
               "_glyph": 148,
               "_showGlyph": false
             }

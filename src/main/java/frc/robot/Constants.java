@@ -177,6 +177,24 @@ public final class Constants {
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
 
+
+
+    }
+
+    /**
+     * Motor CAN id's.
+     */
+    public static final class Motors {
+
+
+
+        // ...
+    }
+
+    /**
+     * Pneumatics CAN id constants.
+     */
+    public static final class Pneumatics {
     }
 
     /**
@@ -190,6 +208,21 @@ public final class Constants {
      * Constants for the wrist.
      */
     public static final class Wrist {
+
+        public static final int WRIST_MOTOR_ID = 12;
+
+        /**
+         * Wrist PID id constants
+         */
+        public static final class PID {
+            public static final double kP = -0.024;
+            public static final double kI = 0.0;
+            public static final double kD = 0.0;
+            public static final double kS = 0.0;
+            public static final double kG = .77;
+            public static final double kV = 0.0;
+        }
+
         public static final int WRIST_CAN_ID = 12;
         public static final int LEFT_MOTOR_ID = 13;
         public static final int RIGHT_MOTOR_ID = 16;
@@ -233,6 +266,7 @@ public final class Constants {
             public static final double KG = 1.1;
             public static final double KV = 0.0;
         }
+
     }
 
     /**
@@ -277,3 +311,4 @@ public final class Constants {
     }
 
 }
+

@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -10,16 +6,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.TeleopSwerve;
-import frc.robot.commands.arm.ArmMoving;
-import frc.robot.commands.dropintake.MoveDDIntake;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DropIntake;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.WristIntake;
+import frc.robot.subsystems.Wrist;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -29,12 +25,11 @@ import frc.robot.subsystems.WristIntake;
  */
 public class RobotContainer {
     /* Controllers */
+
+
     private final CommandXboxController driver = new CommandXboxController(Constants.DRIVER_ID);
     private final CommandXboxController operator = new CommandXboxController(Constants.OPERATOR_ID);
 
-
-
-    // Initialize AutoChooser Sendable
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
     public PneumaticHub ph = new PneumaticHub();
 
@@ -46,20 +41,22 @@ public class RobotContainer {
     // Subsystems
     private LEDs leds = new LEDs(Constants.LEDConstants.LED_COUNT, Constants.LEDConstants.PWM_PORT);
     /* Subsystems */
+    private final Wrist wrist = new Wrist();
     private final Swerve s_Swerve = new Swerve();
     private final DropIntake dIntake = new DropIntake();
     private final Arm s_Arm = new Arm();
-    private final WristIntake wrist;
     // public DigitalInput testSensor = new DigitalInput(0);
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
         ph.enableCompressorAnalog(90, 120);
-        wrist = new WristIntake(ph);
         s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver,
             Constants.Swerve.IS_FIELD_RELATIVE, Constants.Swerve.IS_OPEN_LOOP));
         // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
         SmartDashboard.putData("Choose Auto: ", autoChooser);
+        autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
         // Configure the button bindings
         configureButtonBindings();
 
@@ -105,22 +102,27 @@ public class RobotContainer {
         driver.y().onTrue(new InstantCommand(
             () -> SmartDashboard.putString(" .get ABS: ", dIntake.getAngleMeasurement() + " ")));
 
-        driver.b().whileTrue(new MoveDDIntake(dIntake, dIntake.position1));
-        driver.a().whileTrue(new MoveDDIntake(dIntake, dIntake.position2));
-        driver.x().whileTrue(new MoveDDIntake(dIntake, dIntake.position3));
-        // driver.x().whileTrue(new WristIntakeIn(wrist));
+        // driver.b().whileTrue(new MoveDDIntake(dIntake, dIntake.position1));
+        // driver.a().whileTrue(new MoveDDIntake(dIntake, dIntake.position2));
+        // driver.x().whileTrue(new MoveDDIntake(dIntake, dIntake.position3));
+        // // driver.x().whileTrue(new WristIntakeIn(wrist));
 
-        operator.a().whileTrue(new ArmMoving(s_Arm, 90));
-        operator.b().whileTrue(new ArmMoving(s_Arm, 3));
-        operator.x().whileTrue(new ArmMoving(s_Arm, 120));
+        // operator.a().whileTrue(new ArmMoving(s_Arm, 90));
+        // operator.b().whileTrue(new ArmMoving(s_Arm, 3));
+        // operator.x().whileTrue(new ArmMoving(s_Arm, 120));
+
+        operator.leftTrigger().whileTrue(new FunctionalCommand(() -> wrist.lastAngle = 0,
+            () -> wrist.test(), inter -> wrist.wristMotor.set(0), () -> false, wrist));
     }
 
     /**
-     * Use this to pass the autonomous command to the main {@link Robot} class.
+     * Gets the user's selected autonomous command.
      *
-     * @return the command to run in autonomous
+     * @return Returns autonomous command selected.
      */
     public Command getAutonomousCommand() {
+        // return new P1_3B(swerveDrive, shooter, innerMagazine, outerMagazine, intake, turret,
+        // vision);
         return autoChooser.getSelected();
     }
 }
