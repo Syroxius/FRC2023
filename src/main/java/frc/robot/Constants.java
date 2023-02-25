@@ -227,14 +227,13 @@ public final class Constants {
         public static final int WRIST_CAN_ID = 12;
         public static final int LEFT_MOTOR_ID = 13;
         public static final int RIGHT_MOTOR_ID = 16;
-        public static final int CONE_SENSOR_ID_UPPER = 0;
-        public static final int CONE_SENSOR_ID_LOWER = 1;
-        public static final int CUBE_SENSOR_ID_UPPER = 2;
-        public static final int CUBE_SENSOR_ID_LOWER = 3;
+        public static final int CONE_SENSOR_ID = 0;
+        public static final int CUBE_SENSOR_ID_LEFT = 1;
+        public static final int CUBE_SENSOR_ID_RIGHT = 2;
 
-        public static final double INTAKE_SPEED = 1;
+        public static final double INTAKE_SPEED = .5;
         public static final int INTAKE_STOP_SPEED = 0;
-        public static final double INTAKE_RELEASE_SPEED = -1;
+        public static final double INTAKE_RELEASE_SPEED = -.2;
         public static final double INTAKE_PANIC_SPEED = -1;
 
         public static final int SOLENOID_FORWARD_CHANNEL = 0;
@@ -275,7 +274,7 @@ public final class Constants {
      */
     public static final class LEDConstants {
         public static final int PWM_PORT = 9;
-        public static final int LED_COUNT = 36;
+        public static final int LED_COUNT = 60;
     }
 
     /**

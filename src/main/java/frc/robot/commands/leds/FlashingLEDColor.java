@@ -56,6 +56,11 @@ public class FlashingLEDColor extends CommandBase {
     }
 
     @Override
+    public boolean isFinished() {
+        return false;
+    }
+
+    @Override
     public boolean runsWhenDisabled() {
         return true;
     }
