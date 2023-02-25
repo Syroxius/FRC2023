@@ -67,3 +67,17 @@ CAN Spark Max 17 - Drop Down Intake - Intake Motor
 *Right Joystick:* Swerve Rotation
 
 ### Operator:
+
+### Autonomous Path Name Key:
+
+Far Ride of Ramp - F
+
+Close Side of Ramp - C
+
+Score 1 Game piece - S1
+
+Score 2 Game piece - S2
+
+Docking - D
+
+Ex: *Far side of ramp, scores 1 game piece, docks* = FS1D
