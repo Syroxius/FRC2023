@@ -43,6 +43,10 @@ public class FieldConstants {
     public static final double fieldLength = Units.inchesToMeters(651.25);
     public static final double fieldWidth = Units.inchesToMeters(315.5);
     public static final double tapeWidth = Units.inchesToMeters(2.0);
+    public static final Pose3d blueOrigin = new Pose3d();
+    public static final Pose3d redOrigin =
+        new Pose3d(new Translation3d(FieldConstants.fieldLength, FieldConstants.fieldWidth, 0),
+            new Rotation3d(0, 0, Math.PI));
 
     /**
      * Dimensions for community and charging station, including the tape.

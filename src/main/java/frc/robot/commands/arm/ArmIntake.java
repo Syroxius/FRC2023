@@ -6,26 +6,27 @@ import frc.robot.subsystems.Arm;
 /**
  * This command will move the arm to a requested angle.
  */
-public class ArmMoving extends CommandBase {
+public class ArmIntake extends CommandBase {
     private Arm arm;
-    private double goal;
+    private double armAngle = 20;
+    private double wristAngle = 20;
 
     /**
      * Requirements for the command.
      *
      * @param arm Arm subsystem.
-     * @param goal Goal at which the arm should move to.
      */
-    public ArmMoving(Arm arm, double goal) {
+    public ArmIntake(Arm arm) {
         this.arm = arm;
-        this.goal = goal;
         addRequirements(arm);
     }
 
     @Override
     public void initialize() {
         arm.enablePID();
-        arm.setArmGoal(goal);
+        arm.setArmGoal(armAngle);
+        arm.setWristOffset(wristAngle);
+        // arm.setElevatorGoal(elevatorPosition);
     }
 
     @Override

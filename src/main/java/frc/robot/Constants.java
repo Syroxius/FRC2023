@@ -199,10 +199,28 @@ public final class Constants {
     }
 
     /**
-     * Elevator constants.
+     * Elevator Motor constants.
      */
-    public static final class ElevatorConstants {
-        public static final int CAN_ID = 11;
+    public static final class Elevator {
+        public static final int ELEVATOR_MOTOR_ID = 11;
+        public static final double ELEVATOR_STOP = 0.0;
+
+        /* Elevator Encoder */
+        public static final double ENCODER_OFFSET = 0.0;
+        public static final double MAX_ENCODER = 2.30; // 2.3333325386047363
+
+        /**
+         * Constants for the PID portion of the elevator.
+         */
+        public static final class PID {
+            public static final double ELEVATOR_KP = 0;
+            public static final double ELEVATOR_KI = 0.0;
+            public static final double ELEVATOR_KD = 0.0;
+
+            public static final double ELEVATOR_KS_VOLTS = 0.0;
+            public static final double ELEVATOR_KG_VOLTS = 5.0;
+            public static final double ELEVATOR_KV_VOLT_SECONDS_PER_ROTATION = 0.0;
+        }
     }
 
     /**
@@ -216,11 +234,11 @@ public final class Constants {
          * Wrist PID id constants
          */
         public static final class PID {
-            public static final double kP = -0.024;
+            public static final double kP = -0.03;
             public static final double kI = 0.0;
             public static final double kD = 0.0;
             public static final double kS = 0.0;
-            public static final double kG = .77;
+            public static final double kG = .8;
             public static final double kV = 0.0;
         }
 
@@ -231,7 +249,7 @@ public final class Constants {
         public static final int CUBE_SENSOR_ID_LEFT = 1;
         public static final int CUBE_SENSOR_ID_RIGHT = 2;
 
-        public static final double INTAKE_SPEED = .5;
+        public static final double INTAKE_SPEED = .3;
         public static final int INTAKE_STOP_SPEED = 0;
         public static final double INTAKE_RELEASE_SPEED = -.2;
         public static final double INTAKE_PANIC_SPEED = -1;
@@ -249,7 +267,7 @@ public final class Constants {
         public static final int DROP_ENCODER_ID = 4;
         public static final int INTAKE_MOTOR_ID = 17;
 
-        public static final double INTAKE_SPEED = 0.3;
+        public static final double INTAKE_SPEED = 0.5;
         public static final double SPIT_SPEED = -0.1;
         public static final double DROP_VOLTS = -0.2;
         public static final double RETRACT_VOLTS = 0.3;
@@ -293,22 +311,22 @@ public final class Constants {
         public static final int FOURTH_POSITION = 160;
         public static final int FIFTH_POSITION = 130;
 
+        public static final double encoder1Offset = 301.0074091; // 9
+        public static final double encoder2Offset = 253.5564923; // 10
+
         /**
          * Arm PID constants.
          */
         public static final class PID {
-            public static final double KP = 0.035;
+            public static final double KP = 0.08;
             public static final double KI = 0.0;
             public static final double KD = 0.0;
             public static final double KF = 0.0;
-            public static final double K_GVOLTS = 0.50;
+            public static final double K_GVOLTS_MIN = 0.45;
+            public static final double K_GVOLTS_MAX = 0.80;
             public static final double K_SVOLTS = 0.0;
-            public static final double K_MAX_VELOCITY_RAD_PER_SECOND = 0.2;
-            public static final double K_MAX_ACCELERATION_RAD_PER_SEC_SQUARED = 0.2;
             public static final double K_WVOLT_SECOND_PER_RAD = 0.0;
             public static final double K_AVOLT_SECOND_SQUARED_PER_RAD = 0.0;
         }
     }
-
 }
-

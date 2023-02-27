@@ -113,7 +113,7 @@ public class DropIntake extends SubsystemBase {
 
     // Stops the intake from running.
     public void stop() {
-        intakeMotor.setVoltage(0);
+        intakeMotor.set(0);
     }
 
     /**
