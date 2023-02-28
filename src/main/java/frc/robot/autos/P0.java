@@ -2,9 +2,8 @@ package frc.robot.autos;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.drive.MoveToPos;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -24,8 +23,9 @@ public class P0 extends SequentialCommandGroup {
         // PathPlannerState initialState = p0.getInitialState();
         // TurnToAngle firstCommand = new TurnToAngle(swerve, 250, false);
 
-        addCommands(new InstantCommand(() -> swerve
-            .resetOdometry(new Pose2d(new Translation2d(5, 5), Rotation2d.fromDegrees(90)))));
+        // addCommands(new InstantCommand(
+        // () -> swerve.resetOdometry(FieldConstants.aprilTags.get(5).toPose2d())));
+        addCommands(new MoveToPos(swerve, new Pose2d(5, 5, Rotation2d.fromDegrees(0))));
 
     }
 }

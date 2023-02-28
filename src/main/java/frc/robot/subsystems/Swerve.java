@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.util.FieldConstants;
 import frc.lib.util.swerve.SwerveModule;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 /**
@@ -193,8 +193,7 @@ public class Swerve extends SubsystemBase {
             if (!hasInitialized || DriverStation.isDisabled()) {
                 var target = res.getBestTarget();
                 var camToTargetTrans = target.getBestCameraToTarget();
-                var aprilTagPose =
-                    Robot.aprilTagFieldLayout.getTagPose(target.getFiducialId()).get();
+                var aprilTagPose = FieldConstants.aprilTags.get(target.getFiducialId());
                 if (aprilTagPose != null) {
                     var camPose = aprilTagPose.transformBy(camToTargetTrans.inverse());
                     var robotPose =
@@ -210,7 +209,7 @@ public class Swerve extends SubsystemBase {
             var target = res.getBestTarget();
 
             var camToTargetTrans = target.getBestCameraToTarget();
-            var aprilTagPose = Robot.aprilTagFieldLayout.getTagPose(target.getFiducialId()).get();
+            var aprilTagPose = FieldConstants.aprilTags.get(target.getFiducialId());
             if (aprilTagPose != null) {
                 var camPose = aprilTagPose.transformBy(camToTargetTrans.inverse());
                 var robotPose =
@@ -226,7 +225,7 @@ public class Swerve extends SubsystemBase {
             }
         }
 
-        updateField2d();
+        field.setRobotPose(getPose());
 
         SmartDashboard.putBoolean("Has Initialized", hasInitialized);
         SmartDashboard.putNumber("Robot X", getPose().getX());
@@ -248,11 +247,6 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position",
                 mod.getPosition().distanceMeters);
         }
-    }
-
-    public void updateField2d() {
-        Pose2d fieldRalativePos = getPose();
-        field.setRobotPose(fieldRalativePos.relativeTo(Robot.origin.toPose2d()));
     }
 
     /**
