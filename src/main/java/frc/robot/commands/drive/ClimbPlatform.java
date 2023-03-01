@@ -52,8 +52,8 @@ public class ClimbPlatform extends CommandBase {
         }
         SmartDashboard.putBoolean("Been Tilted", beenTilted);
         ChassisSpeeds chassisSpeeds = new ChassisSpeeds(speed, 0, 0);
-        chassisSpeeds =
-            ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, swerve.getFieldRelativeHeading());
+        // chassisSpeeds =
+        // ChassisSpeeds.fromFieldRelativeSpeeds(chassisSpeeds, swerve.getFieldRelativeHeading());
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.SWERVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
         swerve.setModuleStates(swerveModuleStates);

@@ -27,7 +27,7 @@ import frc.robot.autos.P0;
 import frc.robot.commands.arm.ArmIntake;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.arm.ScoreArm;
-import frc.robot.commands.drive.ClimbPlatform;
+import frc.robot.commands.drive.MoveToEngage;
 import frc.robot.commands.drive.MoveToScore;
 import frc.robot.commands.drive.TeleopSwerve;
 import frc.robot.commands.leds.FlashingLEDColor;
@@ -105,7 +105,7 @@ public class RobotContainer {
         SmartDashboard.putData("Choose Auto: ", autoChooser);
         autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
         autoChooser.addOption("Test", new P0(s_Swerve));
-        autoChooser.addOption("Move To Score", new MoveToScore(s_Swerve));
+        autoChooser.addOption("Move To Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
         // Configure the button bindings
         leds.setDefaultCommand(new RainbowLEDs(leds));
         configureButtonBindings();
@@ -120,8 +120,10 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         driver.y().onTrue(new InstantCommand(() -> s_Swerve.resetFieldRelativeOffset()));
-        driver.leftBumper().and(driver.rightBumper()).whileTrue(new MoveToScore(s_Swerve));
-        driver.rightTrigger().and(driver.leftTrigger()).whileTrue(new ClimbPlatform(s_Swerve));
+        driver.rightTrigger().and(driver.leftTrigger())
+            .whileTrue(new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
+        driver.rightBumper().and(driver.leftBumper())
+            .whileTrue(new MoveToEngage(s_Swerve, s_Arm, s_wristIntake));
 
         /* Operator Buttons */
         operator.leftBumper().onTrue(new FlashingLEDColor(leds, Color.kYellow)

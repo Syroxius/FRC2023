@@ -25,7 +25,7 @@ public class P0 extends SequentialCommandGroup {
 
         // addCommands(new InstantCommand(
         // () -> swerve.resetOdometry(FieldConstants.aprilTags.get(5).toPose2d())));
-        addCommands(new MoveToPos(swerve, new Pose2d(5, 5, Rotation2d.fromDegrees(0))));
+        addCommands(new MoveToPos(swerve, () -> new Pose2d(5, 5, Rotation2d.fromDegrees(0))));
 
     }
 }
