@@ -311,7 +311,7 @@ public final class Constants {
         public static final int FOURTH_POSITION = 160;
         public static final int FIFTH_POSITION = 130;
 
-        public static final double encoder1Offset = 301.0074091; // 9
+        public static final double encoder1Offset = 319.2774091; // 9
         public static final double encoder2Offset = 253.5564923; // 10
 
         /**

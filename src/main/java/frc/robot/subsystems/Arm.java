@@ -143,7 +143,7 @@ public class Arm extends SubsystemBase {
         if (enablePID) {
             armToAngle();
             // elevatorToPosition();
-            // wristToPosition();
+            wristToPosition();
         }
         SmartDashboard.putNumber("Arm Encoder 1", getAngleMeasurement1());
         SmartDashboard.putNumber("Arm Encoder 2", getAngleMeasurement2());
