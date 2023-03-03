@@ -65,11 +65,11 @@ public class Arm extends SubsystemBase {
 
     private GenericEntry armAngleWidget = RobotContainer.mainDriverTab
         .add("Arm Angle", getAverageArmAngle()).withWidget(BuiltInWidgets.kDial)
-        .withProperties(Map.of("min", 0, "max", 150)).withPosition(8, 0).withSize(2, 2).getEntry();
-    private GenericEntry armExtensionWidget = RobotContainer.mainDriverTab
-        .add("Arm Extension", getElevatorPosition()).withWidget(BuiltInWidgets.kDial)
-        .withProperties(Map.of("min", 0, "max", Constants.Elevator.MAX_ENCODER)).withPosition(10, 0)
-        .withSize(2, 2).getEntry();
+        .withProperties(Map.of("min", 0, "max", 150)).withPosition(8, 1).withSize(2, 2).getEntry();
+    // private GenericEntry armExtensionWidget = RobotContainer.mainDriverTab
+    // .add("Arm Extension", getElevatorPosition()).withWidget(BuiltInWidgets.kDial)
+    // .withProperties(Map.of("min", 0, "max", Constants.Elevator.MAX_ENCODER)).withPosition(10, 0)
+    // .withSize(2, 2).getEntry();
 
     private boolean goingDown = false;
 
@@ -141,7 +141,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         armAngleWidget.setDouble(getAverageArmAngle());
-        armExtensionWidget.setDouble(getElevatorPosition());
+        // armExtensionWidget.setDouble(getElevatorPosition());
         if (enablePID) {
             armToAngle();
             // elevatorToPosition();

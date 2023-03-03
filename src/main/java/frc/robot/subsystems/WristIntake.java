@@ -35,15 +35,15 @@ public class WristIntake extends SubsystemBase {
     private GenericEntry coneGrabbed = RobotContainer.mainDriverTab
         .add("Cone Grabbed", getConeSensor()).withWidget(BuiltInWidgets.kBooleanBox)
         .withProperties(Map.of("Color when true", "#FFFF00", "Color when false", "#FFFFFF"))
-        .withPosition(10, 2).withSize(2, 1).getEntry();
+        .withPosition(6, 3).withSize(2, 1).getEntry();
     private GenericEntry cubeGrabbed = RobotContainer.mainDriverTab
         .add("Cube Grabbed", getConeSensor()).withWidget(BuiltInWidgets.kBooleanBox)
         .withProperties(Map.of("Color when true", "#A020F0", "Color when false", "#FFFFFF"))
-        .withPosition(10, 3).withSize(2, 1).getEntry();
+        .withPosition(6, 2).withSize(2, 1).getEntry();
     private GenericEntry solenoidStatus = RobotContainer.mainDriverTab.add("Grabber Open", false)
         .withWidget(BuiltInWidgets.kBooleanBox)
         .withProperties(Map.of("Color when true", "green", "Color when false", "red"))
-        .withPosition(0, 4).withSize(2, 1).getEntry();
+        .withPosition(6, 4).withSize(2, 1).getEntry();
 
     /**
      * Create Wrist Intake Subsystem
@@ -62,7 +62,7 @@ public class WristIntake extends SubsystemBase {
     public void periodic() {
         coneGrabbed.setBoolean(getConeSensor());
         cubeGrabbed.setBoolean(getCubeSensor());
-        solenoidStatus.setBoolean(this.wristSolenoid.get() == Value.kForward);
+        solenoidStatus.setBoolean(this.wristSolenoid.get() == Value.kReverse);
     }
 
     // Runs wrist intake motor to intake a game piece.

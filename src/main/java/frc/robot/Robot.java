@@ -26,6 +26,7 @@ public class Robot extends TimedRobot {
 
     public static int level = 0;
     public static int column = 0;
+    // public static UsbCamera camera = CameraServer.startAutomaticCapture("Magazine Camera", 0);
 
     // private Ultrasonic ultrasonic = new Ultrasonic();
     /**

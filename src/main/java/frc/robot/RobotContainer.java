@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -51,9 +50,10 @@ import frc.robot.subsystems.WristIntake;
 public class RobotContainer {
     /* Shuffleboard */
     public static ShuffleboardTab mainDriverTab = Shuffleboard.getTab("Main Driver");
+    public static ShuffleboardTab autoTab = Shuffleboard.getTab("Auto");
     private ShuffleboardLayout targetGrid =
         RobotContainer.mainDriverTab.getLayout("Next Position", BuiltInLayouts.kGrid)
-            .withPosition(8, 2).withSize(2, 2).withProperties(
+            .withPosition(6, 0).withSize(2, 2).withProperties(
                 Map.of("Number of columns", 2, "Number of rows", 1, "Label position", "TOP"));
     public GenericEntry levelWidget = targetGrid.add("Level", Robot.level)
         .withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("Min", 0, "Max", 2, "Center",
@@ -67,11 +67,28 @@ public class RobotContainer {
         mainDriverTab.add("Game Piece", Scoring.getGamePiece() == GamePiece.CONE)
             .withWidget(BuiltInWidgets.kBooleanBox)
             .withProperties(Map.of("Color when true", "yellow", "Color when false", "purple"))
-            .withPosition(8, 4).withSize(2, 1).getEntry();
+            .withPosition(8, 0).withSize(2, 1).getEntry();
+
+    private final SendableChooser<Integer> levels = new SendableChooser<>();
+    private final SendableChooser<Integer> columns = new SendableChooser<>();
+
+    public ComplexWidget autoLevelWidget =
+        autoTab.add("Level", levels).withWidget(BuiltInWidgets.kComboBoxChooser)
+            .withProperties(Map.of("Show Glyph", true, "Glyph", "ARROWS_V")).withPosition(8, 0)
+            .withSize(2, 2);
+    public ComplexWidget autoColumnWidet =
+        autoTab.add("Column", columns).withWidget(BuiltInWidgets.kComboBoxChooser)
+            .withProperties(Map.of("Show Glyph", true, "Glyph", "ARROWS_H")).withPosition(8, 2)
+            .withSize(2, 2);
+    public static GenericEntry enableDockWidget = autoTab.add("Enable Dock", true)
+        .withWidget(BuiltInWidgets.kToggleSwitch).withPosition(10, 1).withSize(2, 1).getEntry();
+    // public ComplexWidget cameraFeed = mainDriverTab.add("Camera Feed", Robot.camera)
+    // .withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(6, 5)
+    // .withProperties(Map.of("Show crosshair", false, "Show controls", false));
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
-    public ComplexWidget autoChooserWidget = mainDriverTab.add("Auto Chooser", autoChooser)
-        .withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(2, 4).withSize(2, 1);
+    public ComplexWidget autoChooserWidget = autoTab.add("Auto Chooser", autoChooser)
+        .withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(10, 0).withSize(2, 1);
 
     /* Controllers */
 
@@ -104,10 +121,25 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver,
             Constants.Swerve.IS_FIELD_RELATIVE, Constants.Swerve.IS_OPEN_LOOP));
         // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
-        SmartDashboard.putData("Choose Auto: ", autoChooser);
         autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
         autoChooser.addOption("Leave Community", new LeaveCommunity(s_Swerve));
         autoChooser.addOption("Move To Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
+
+        levels.setDefaultOption("0", 0);
+        levels.addOption("0", 0);
+        levels.addOption("1", 1);
+        levels.addOption("2", 2);
+
+        columns.setDefaultOption("0", 0);
+        columns.addOption("0", 0);
+        columns.addOption("1", 1);
+        columns.addOption("2", 2);
+        columns.addOption("3", 3);
+        columns.addOption("4", 4);
+        columns.addOption("5", 5);
+        columns.addOption("6", 6);
+        columns.addOption("7", 7);
+        columns.addOption("8", 8);
         autoChooser.addOption("Leave Community", new LeaveCommunity(s_Swerve));
         autoChooser.addOption("Cross and Dock", new CrossAndDock(s_Swerve, s_Arm, s_wristIntake));
         autoChooser.addOption("Score 1 Dock", new Score1Dock(s_Swerve, s_Arm, s_wristIntake));
