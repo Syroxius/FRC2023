@@ -35,7 +35,7 @@ public class DockArm extends SequentialCommandGroup {
 
     private boolean armInside() {
         return (arm.getAverageArmAngle() > 180 ? arm.getAverageArmAngle() - 360
-            : arm.getAverageArmAngle()) > 15;
+            : arm.getAverageArmAngle()) > 21;
     }
 
 }

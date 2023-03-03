@@ -134,7 +134,7 @@ public class RobotContainer {
         operator.a().whileTrue(new WristIntakeIn(s_wristIntake));
         operator.b().whileTrue(new WristIntakeRelease(s_wristIntake));
         operator.x().whileTrue(new WristIntakeIn(s_wristIntake).alongWith(new ArmIntake(s_Arm)));
-        operator.y().whileTrue(new DockArm(s_Arm, s_wristIntake));
+        operator.y().whileTrue(new DockArm(s_Arm, s_wristIntake).repeatedly());
 
         operator.povUp().onTrue(
             new DisabledInstantCommand(() -> Robot.level = MathUtil.clamp(Robot.level + 1, 0, 2)));

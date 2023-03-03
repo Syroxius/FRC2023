@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -55,8 +54,8 @@ public class Arm extends SubsystemBase {
     // WRIST
     public final CANSparkMax wristMotor =
         new CANSparkMax(Constants.Wrist.WRIST_MOTOR_ID, MotorType.kBrushless);
-    private final ElevatorFeedforward wristFeedforward = new ElevatorFeedforward(
-        Constants.Wrist.PID.kS, Constants.Wrist.PID.kG, Constants.Wrist.PID.kV);
+    private final ArmFeedforward wristFeedforward =
+        new ArmFeedforward(Constants.Wrist.PID.kS, Constants.Wrist.PID.kG, Constants.Wrist.PID.kV);
     private final AbsoluteEncoder wristEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
     private final PIDController wristPIDController =
         new PIDController(Constants.Wrist.PID.kP, Constants.Wrist.PID.kI, Constants.Wrist.PID.kD);
@@ -132,6 +131,9 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Gravity Max: ", Constants.Arm.PID.K_GVOLTS_MAX);
         SmartDashboard.putNumber("Arm S: ", Constants.Arm.PID.K_SVOLTS);
 
+        SmartDashboard.putNumber("Wrist P: ", Constants.Wrist.PID.kP);
+        SmartDashboard.putNumber("Wrist I: ", Constants.Wrist.PID.kI);
+        SmartDashboard.putNumber("Wrist D: ", Constants.Wrist.PID.kD);
 
 
     }
@@ -200,6 +202,9 @@ public class Arm extends SubsystemBase {
         armMotor2.setVoltage(
             armPID2 + m_feedforward.calculate(Math.toRadians(getAngleMeasurement1() - 90), 0));
 
+        if (armPIDController2.atSetpoint()) {
+            armPIDController2.reset();
+        }
         SmartDashboard.putNumber("Arm Voltage 1", armPID1);
         SmartDashboard.putNumber("Arm Voltage 2", armPID2);
     }
@@ -328,6 +333,7 @@ public class Arm extends SubsystemBase {
      */
     public void setWristGoal(double goal) {
         wristPIDController.setSetpoint(goal);
+        wristPIDController.reset();
     }
 
     /**
