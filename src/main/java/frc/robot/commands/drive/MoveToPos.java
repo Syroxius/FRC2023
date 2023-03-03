@@ -8,6 +8,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.FieldConstants;
 import frc.robot.Constants;
@@ -45,7 +47,7 @@ public class MoveToPos extends CommandBase {
         this.pose2dSupplier = pose2dSupplier;
         this.flipForRed = flipForRed;
         this.addRequirements(swerve);
-        holonomicDriveController.setTolerance(new Pose2d(.01, .01, Rotation2d.fromDegrees(1)));
+        holonomicDriveController.setTolerance(new Pose2d(.05, .05, Rotation2d.fromDegrees(1)));
     }
 
     /**
@@ -69,8 +71,8 @@ public class MoveToPos extends CommandBase {
 
     @Override
     public void initialize() {
-        Pose2d pose2d = pose2dSupplier.get();
-        if (flipForRed) {
+        pose2d = pose2dSupplier.get();
+        if (flipForRed && DriverStation.getAlliance() == Alliance.Red) {
             pose2d = FieldConstants.allianceFlip(pose2d);
         }
     }

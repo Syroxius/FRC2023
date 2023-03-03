@@ -1,5 +1,6 @@
 package frc.robot.commands.drive;
 
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.util.Scoring;
 import frc.robot.commands.arm.ScoreArm;
@@ -19,7 +20,7 @@ public class MoveToScore extends SequentialCommandGroup {
     public MoveToScore(Swerve swerve, Arm arm, WristIntake wristIntake) {
 
         MoveToPos moveToPos = new MoveToPos(swerve, Scoring::getPreScorePosition, false);
-        ScoreArm moveArm = new ScoreArm(arm, wristIntake);
+        ParallelRaceGroup moveArm = new ScoreArm(arm, wristIntake).withTimeout(1.5);
         MoveToPos moveToScoreFinal = new MoveToPos(swerve, Scoring::getScorPose2d, false);
         addCommands(moveToPos, moveArm, moveToScoreFinal);
     }

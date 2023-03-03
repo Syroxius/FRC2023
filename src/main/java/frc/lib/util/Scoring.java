@@ -52,9 +52,9 @@ public class Scoring {
         GamePiece gamePiece = getGamePiece();
         Map<Integer, Double> xCoord = Map.of();
         if (gamePiece == GamePiece.CUBE) {
-            xCoord = Map.of(0, 32.0, 1, 49.5, 2, 40.5);
+            xCoord = Map.of(0, 32.0, 1, 44.5, 2, 34.0);
         } else if (gamePiece == GamePiece.CONE) {
-            xCoord = Map.of(0, 41.0, 1, 37.0, 2, 32.0);
+            xCoord = Map.of(0, 30.0, 1, 31.0, 2, 32.0);
         }
         return xCoord.get(Robot.level);
     }
@@ -123,10 +123,10 @@ public class Scoring {
 
         if (gamePiece == GamePiece.CUBE) {
             armExtensionValues = Map.of(0, 0.0, 1, 0.0, 2, 0.0);
-            armAngleValues = Map.of(0, 20.0, 1, 90.0, 2, 90.0);
+            armAngleValues = Map.of(0, 20.0, 1, 80.0, 2, 90.0);
         } else if (gamePiece == GamePiece.CONE) {
             armExtensionValues = Map.of(0, 0.0, 1, 0.0, 2, 0.0);
-            armAngleValues = Map.of(0, 45.0, 1, 90.0, 2, 110.0);
+            armAngleValues = Map.of(0, 30.0, 1, 90.0, 2, 110.0);
         }
         return new ArmPosition(armAngleValues.get(Robot.level),
             armExtensionValues.get(Robot.level));
