@@ -24,6 +24,7 @@ import frc.lib.util.Scoring;
 import frc.lib.util.Scoring.GamePiece;
 import frc.robot.autos.CrossAndDock;
 import frc.robot.autos.LeaveCommunity;
+import frc.robot.autos.Score1;
 import frc.robot.autos.Score1Dock;
 import frc.robot.commands.arm.ArmIntake;
 import frc.robot.commands.arm.DockArm;
@@ -32,6 +33,7 @@ import frc.robot.commands.drive.MoveToEngage;
 import frc.robot.commands.drive.MoveToScore;
 import frc.robot.commands.drive.TeleopSwerve;
 import frc.robot.commands.leds.FlashingLEDColor;
+import frc.robot.commands.leds.PoliceLEDs;
 import frc.robot.commands.leds.RainbowLEDs;
 import frc.robot.commands.wrist.WristIntakeIn;
 import frc.robot.commands.wrist.WristIntakePanic;
@@ -69,22 +71,22 @@ public class RobotContainer {
             .withProperties(Map.of("Color when true", "yellow", "Color when false", "purple"))
             .withPosition(8, 0).withSize(2, 1).getEntry();
 
-    private final SendableChooser<Integer> levels = new SendableChooser<>();
-    private final SendableChooser<Integer> columns = new SendableChooser<>();
+    private final SendableChooser<Integer> levelsChooser = new SendableChooser<>();
+    private final SendableChooser<Integer> columnsChooser = new SendableChooser<>();
 
     public ComplexWidget autoLevelWidget =
-        autoTab.add("Level", levels).withWidget(BuiltInWidgets.kComboBoxChooser)
+        autoTab.add("Level", levelsChooser).withWidget(BuiltInWidgets.kComboBoxChooser)
             .withProperties(Map.of("Show Glyph", true, "Glyph", "ARROWS_V")).withPosition(8, 0)
             .withSize(2, 2);
     public ComplexWidget autoColumnWidet =
-        autoTab.add("Column", columns).withWidget(BuiltInWidgets.kComboBoxChooser)
+        autoTab.add("Column", columnsChooser).withWidget(BuiltInWidgets.kComboBoxChooser)
             .withProperties(Map.of("Show Glyph", true, "Glyph", "ARROWS_H")).withPosition(8, 2)
             .withSize(2, 2);
     public static GenericEntry enableDockWidget = autoTab.add("Enable Dock", true)
         .withWidget(BuiltInWidgets.kToggleSwitch).withPosition(10, 1).withSize(2, 1).getEntry();
-    // public ComplexWidget cameraFeed = mainDriverTab.add("Camera Feed", Robot.camera)
-    // .withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(6, 5)
-    // .withProperties(Map.of("Show crosshair", false, "Show controls", false));
+    public ComplexWidget cameraFeed = mainDriverTab.add("Camera Feed", Robot.camera)
+        .withWidget(BuiltInWidgets.kCameraStream).withPosition(0, 0).withSize(6, 5).withProperties(
+            Map.of("Show crosshair", false, "Show controls", false, "Rotation", "QUARTER_CCW"));
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
     public ComplexWidget autoChooserWidget = autoTab.add("Auto Chooser", autoChooser)
@@ -108,7 +110,7 @@ public class RobotContainer {
 
     /* Subsystems */
     private LEDs leds = new LEDs(Constants.LEDConstants.LED_COUNT, Constants.LEDConstants.PWM_PORT);
-    private final Swerve s_Swerve = new Swerve();
+    public final Swerve s_Swerve = new Swerve();
     // private final DropIntake s_dIntake = new DropIntake();
     private final Arm s_Arm = new Arm();
     private final WristIntake s_wristIntake = new WristIntake(ph);
@@ -125,24 +127,25 @@ public class RobotContainer {
         autoChooser.addOption("Leave Community", new LeaveCommunity(s_Swerve));
         autoChooser.addOption("Move To Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
 
-        levels.setDefaultOption("0", 0);
-        levels.addOption("0", 0);
-        levels.addOption("1", 1);
-        levels.addOption("2", 2);
+        levelsChooser.setDefaultOption("0", 0);
+        levelsChooser.addOption("0", 0);
+        levelsChooser.addOption("1", 1);
+        levelsChooser.addOption("2", 2);
 
-        columns.setDefaultOption("0", 0);
-        columns.addOption("0", 0);
-        columns.addOption("1", 1);
-        columns.addOption("2", 2);
-        columns.addOption("3", 3);
-        columns.addOption("4", 4);
-        columns.addOption("5", 5);
-        columns.addOption("6", 6);
-        columns.addOption("7", 7);
-        columns.addOption("8", 8);
+        columnsChooser.setDefaultOption("0", 0);
+        columnsChooser.addOption("0", 0);
+        columnsChooser.addOption("1", 1);
+        columnsChooser.addOption("2", 2);
+        columnsChooser.addOption("3", 3);
+        columnsChooser.addOption("4", 4);
+        columnsChooser.addOption("5", 5);
+        columnsChooser.addOption("6", 6);
+        columnsChooser.addOption("7", 7);
+        columnsChooser.addOption("8", 8);
         autoChooser.addOption("Leave Community", new LeaveCommunity(s_Swerve));
         autoChooser.addOption("Cross and Dock", new CrossAndDock(s_Swerve, s_Arm, s_wristIntake));
         autoChooser.addOption("Score 1 Dock", new Score1Dock(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Score 1", new Score1(s_Swerve, s_Arm, s_wristIntake));
         // Configure the button bindings
         leds.setDefaultCommand(new RainbowLEDs(leds));
         configureButtonBindings();
@@ -156,11 +159,13 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        driver.y().onTrue(new InstantCommand(() -> s_Swerve.resetFieldRelativeOffset()));
+        driver.y().onTrue(new DisabledInstantCommand(() -> s_Swerve.resetFieldRelativeOffset()));
         driver.rightTrigger().and(driver.leftTrigger())
             .whileTrue(new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
         driver.rightBumper().and(driver.leftBumper())
             .whileTrue(new MoveToEngage(s_Swerve, s_Arm, s_wristIntake));
+        driver.start()
+            .whileTrue(new InstantCommand(() -> s_Swerve.wheelsIn(), s_Swerve).repeatedly());
 
         /* Operator Buttons */
         operator.leftBumper().onTrue(new FlashingLEDColor(leds, Color.kYellow)
@@ -183,6 +188,7 @@ public class RobotContainer {
             () -> Robot.column = MathUtil.clamp(Robot.column - 1, 0, 8)));
         operator.rightTrigger().and(operator.leftTrigger())
             .whileTrue(new ScoreArm(s_Arm, s_wristIntake));
+        operator.start().toggleOnTrue(new PoliceLEDs(leds));
 
         // operator.povUp().whileTrue(new MoveArm(s_Arm, 110, 0));
         // operator.povDown().whileTrue(new MoveArm(s_Arm, 45, 0));
@@ -258,6 +264,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // return new P1_3B(swerveDrive, shooter, innerMagazine, outerMagazine, intake, turret,
         // vision);
+        Robot.level = levelsChooser.getSelected();
+        Robot.column = columnsChooser.getSelected();
         return new WristIntakeIn(s_wristIntake).withTimeout(.2)
             .andThen(new DockArm(s_Arm, s_wristIntake).withTimeout(.2))
             .andThen(autoChooser.getSelected());

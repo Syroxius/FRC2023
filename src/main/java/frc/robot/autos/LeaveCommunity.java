@@ -13,7 +13,7 @@ import frc.robot.subsystems.Swerve;
  */
 public class LeaveCommunity extends MoveToPos {
 
-    public static double distanceFromTape = 240.0;
+    public static double distanceFromTape = 246.0;
 
     /**
      * Leaves community
@@ -24,7 +24,7 @@ public class LeaveCommunity extends MoveToPos {
         super(swerve,
             () -> new Pose2d(
                 new Translation2d(Units.inchesToMeters(distanceFromTape), swerve.getPose().getY()),
-                Rotation2d.fromDegrees(0)),
+                Rotation2d.fromDegrees(180)),
             true);
     }
 

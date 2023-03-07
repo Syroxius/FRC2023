@@ -1,6 +1,7 @@
 package frc.robot.autos;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -33,7 +34,6 @@ public class Score1Dock extends SequentialCommandGroup {
      */
     public Score1Dock(Swerve swerve, Arm arm, WristIntake wristIntake) {
         this.swerve = swerve;
-        // ScoreArm scoreArm = new ScoreArm(arm, wristIntake);
         MoveToScore moveToScore = new MoveToScore(swerve, arm, wristIntake);
         ParallelRaceGroup wristIntakeRelease = new WristIntakeRelease(wristIntake).withTimeout(.5);
         MoveToPos move6 = new MoveToPos(swerve, () -> get6position(), true);
@@ -66,7 +66,7 @@ public class Score1Dock extends SequentialCommandGroup {
     private Pose2d get8position() {
         double x = aprilTag8.getX() + Units.inchesToMeters(50);
         double y = Units.inchesToMeters(59.39 / 2);
-        return new Pose2d(x, y, swerve.getPose().getRotation());
+        return new Pose2d(x, y, Rotation2d.fromDegrees(180));
     }
 
 
@@ -77,7 +77,7 @@ public class Score1Dock extends SequentialCommandGroup {
      */
     private Pose2d get6position() {
         double x = aprilTag6.getX() + Units.inchesToMeters(50);
-        double y = aprilTag6.getY() + Units.inchesToMeters(30);
-        return new Pose2d(x, y, swerve.getPose().getRotation());
+        double y = aprilTag6.getY() + Units.inchesToMeters(26);
+        return new Pose2d(x, y, Rotation2d.fromDegrees(180));
     }
 }
