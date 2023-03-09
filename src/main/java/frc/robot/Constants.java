@@ -23,18 +23,18 @@ public final class Constants {
      * Motor CAN id's. PID constants for Swerve Auto Holonomic Drive Controller.
      */
     public static class SwerveTransformPID {
-        public static final double PID_XKP = 1.5;
+        public static final double PID_XKP = 2;
         public static final double PID_XKI = 0.0;
         public static final double PID_XKD = 0.0;
-        public static final double PID_YKP = 1.5;
+        public static final double PID_YKP = 2;
         public static final double PID_YKI = 0.0;
         public static final double PID_YKD = 0.0;
-        public static final double PID_TKP = 3.0;
+        public static final double PID_TKP = 9.0;
         public static final double PID_TKI = 0.0;
         public static final double PID_TKD = 0.0;
 
-        public static final double MAX_ANGULAR_VELOCITY = 3.0;
-        public static final double MAX_ANGULAR_ACCELERATION = 3.0;
+        public static final double MAX_ANGULAR_VELOCITY = 9.0;
+        public static final double MAX_ANGULAR_ACCELERATION = 9;
         public static final double STD_DEV_MOD = 2.0;
     }
 
