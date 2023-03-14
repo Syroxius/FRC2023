@@ -168,10 +168,8 @@ public class RobotContainer {
             .whileTrue(new InstantCommand(() -> s_Swerve.wheelsIn(), s_Swerve).repeatedly());
 
         /* Operator Buttons */
-        operator.leftBumper().onTrue(new FlashingLEDColor(leds, Color.kYellow)
-            .until(() -> this.s_wristIntake.getConeSensor()).withTimeout(15.0));
-        operator.rightBumper().onTrue(new FlashingLEDColor(leds, Color.kPurple)
-            .until(() -> this.s_wristIntake.getCubeSensor()).withTimeout(15.0));
+        operator.leftBumper().onTrue(new FlashingLEDColor(leds, Color.kYellow).withTimeout(15.0));
+        operator.rightBumper().onTrue(new FlashingLEDColor(leds, Color.kPurple).withTimeout(15.0));
 
         operator.a().whileTrue(new WristIntakeIn(s_wristIntake));
         operator.b().whileTrue(new WristIntakeRelease(s_wristIntake));
