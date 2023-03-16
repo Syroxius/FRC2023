@@ -159,7 +159,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         driver.y().onTrue(new DisabledInstantCommand(() -> s_Swerve.resetFieldRelativeOffset()));
-        driver.rightTrigger().and(driver.leftTrigger())
+        driver.rightTrigger().and(driver.leftTrigger()).and(operator.start())
             .whileTrue(new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
         driver.rightBumper().and(driver.leftBumper())
             .whileTrue(new MoveToEngage(s_Swerve, s_Arm, s_wristIntake));
@@ -191,7 +191,7 @@ public class RobotContainer {
             () -> Robot.column = MathUtil.clamp(Robot.column - 1, 0, 8)));
         operator.rightTrigger().and(operator.leftTrigger())
             .whileTrue(new ScoreArm(s_Arm, s_wristIntake));
-        operator.start().toggleOnTrue(new PoliceLEDs(leds));
+        operator.back().toggleOnTrue(new PoliceLEDs(leds));
 
         // operator.povUp().whileTrue(new MoveArm(s_Arm, 110, 0));
         // operator.povDown().whileTrue(new MoveArm(s_Arm, 45, 0));
