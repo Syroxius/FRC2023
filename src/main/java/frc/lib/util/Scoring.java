@@ -52,7 +52,7 @@ public class Scoring {
         GamePiece gamePiece = getGamePiece();
         Map<Integer, Double> xCoord = Map.of();
         if (gamePiece == GamePiece.CUBE) {
-            xCoord = Map.of(0, 36.0, 1, 30.0, 2, 29.0);
+            xCoord = Map.of(0, 36.0, 1, 38.0, 2, 29.0);
         } else if (gamePiece == GamePiece.CONE) {
             xCoord = Map.of(0, 26.0, 1, 33.0, 2, 30.0);
         }
@@ -128,8 +128,8 @@ public class Scoring {
 
         if (gamePiece == GamePiece.CUBE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, false);
-            armAngleValues = Map.of(0, -70.0, 1, 0.0, 2, 0.0);
-            wristAngleValues = Map.of(0, 60.0, 1, -80.0, 2, -20.0);
+            armAngleValues = Map.of(0, -70.0, 1, -8.0, 2, 0.0);
+            wristAngleValues = Map.of(0, 60.0, 1, -19.0, 2, -20.0);
         } else if (gamePiece == GamePiece.CONE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, true);
             armAngleValues = Map.of(0, -70.0, 1, 0.0, 2, 18.0);
