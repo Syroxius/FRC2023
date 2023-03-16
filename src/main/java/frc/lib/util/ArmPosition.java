@@ -5,30 +5,30 @@ package frc.lib.util;
  */
 public class ArmPosition {
     double armAngle;
-    double elevatorPosition;
+    boolean armExtended;
     double wristAngle = -10;
 
     /**
      * Class representing the position of the Arm components
      */
-    public ArmPosition(double armAngle, double elevatorPosition, double wristAngle) {
+    public ArmPosition(double armAngle, boolean armExtended, double wristAngle) {
         this.armAngle = armAngle;
-        this.elevatorPosition = elevatorPosition;
+        this.armExtended = armExtended;
         this.wristAngle = wristAngle;
     }
 
     /**
      * Class representing the position of the Arm components
      */
-    public ArmPosition(double armAngle, double elevatorPosition) {
-        this(armAngle, elevatorPosition, -10);
+    public ArmPosition(double armAngle, boolean armExtended) {
+        this(armAngle, armExtended, -10);
     }
 
     /**
      * Class representing the position of the Arm components
      */
     public ArmPosition(double armAngle) {
-        this(armAngle, 0, -10);
+        this(armAngle, false, -10);
     }
 
     /**
@@ -41,12 +41,12 @@ public class ArmPosition {
     }
 
     /**
-     * Get Elevator Position
+     * Get Arm Extension
      *
-     * @return Elevator Position
+     * @return True if extended, false if not
      */
-    public double getElevatorPosition() {
-        return elevatorPosition;
+    public boolean getArmExtended() {
+        return armExtended;
     }
 
     /**

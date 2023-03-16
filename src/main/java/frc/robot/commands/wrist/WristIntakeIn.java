@@ -22,17 +22,19 @@ public class WristIntakeIn extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.closeGrabber();
-        intake.setMotors(Constants.Wrist.INTAKE_SPEED);
+        intake.stopHoldingPiece();
+        intake.setMotor(Constants.Wrist.INTAKE_SPEED);
     }
 
     @Override
     public void end(boolean interrupt) {
-        intake.setMotors(Constants.Wrist.INTAKE_STOP_SPEED);
+        intake.holdPiece();
+        intake.setMotor(Constants.Wrist.INTAKE_STOP_SPEED);
     }
 
     @Override
     public boolean isFinished() {
-        return intake.getConeSensor() || intake.getCubeSensor();
+        return intake.getVoltageSpike(true);
+        // return false;
     }
 }

@@ -6,7 +6,10 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import frc.lib.math.DoubleJointedArmFeedforward;
+import frc.lib.math.DoubleJointedArmFeedforward.JointConfig;
 import frc.lib.util.swerve.SwerveModuleConstants;
 
 /**
@@ -137,7 +140,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int ANGLE_MOTOR_ID = 8;
             public static final int CAN_CODER_ID = 4;
-            public static final double ANGLE_OFFSET = 212.871;
+            public static final double ANGLE_OFFSET = 213.047;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -149,7 +152,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 1;
             public static final int ANGLE_MOTOR_ID = 4;
             public static final int CAN_CODER_ID = 1;
-            public static final double ANGLE_OFFSET = 279.932;
+            public static final double ANGLE_OFFSET = 280.195;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -161,7 +164,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ANGLE_MOTOR_ID = 2;
             public static final int CAN_CODER_ID = 2;
-            public static final double ANGLE_OFFSET = 122.344;
+            public static final double ANGLE_OFFSET = 122.607;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -173,7 +176,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 7;
             public static final int ANGLE_MOTOR_ID = 5;
             public static final int CAN_CODER_ID = 3;
-            public static final double ANGLE_OFFSET = 248.643;
+            public static final double ANGLE_OFFSET = 247.588;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -228,64 +231,46 @@ public final class Constants {
      */
     public static final class Wrist {
 
+        public static final DoubleJointedArmFeedforward.JointConfig config =
+            new JointConfig(Units.lbsToKilograms(1.4), Units.inchesToMeters(38.3), 133.4,
+                Units.inchesToMeters(10.7292), DCMotor.getNEO(1).withReduction(10.0));
+
         public static final int WRIST_MOTOR_ID = 12;
+        public static final double encoderOffset = 31.596;
 
         /**
          * Wrist PID id constants
          */
         public static final class PID {
-            public static final double kP = -0.03;
-            public static final double kI = 0.0;
-            public static final double kD = 0.0;
-            public static final double kS = 0.0;
-            public static final double kG = .8;
-            public static final double kV = 0.0;
+            public static double kP = 1.4;
+            public static double kI = 0.4;
+            public static double kD = 0.0;
+            public static double MAX_VELOCITY = 12.0;
+            public static double MAX_ACCELERATION = 7.0;
+            // public static double TURNOVER_THRESHOLD = 12.8;
+            public static double TURNOVER_THRESHOLD = 120;
+            public static double MAX_INTEGRAL = 0.4;
+            public static double MIN_INTEGRAL = -0.4;
+
         }
 
         public static final int WRIST_CAN_ID = 12;
-        public static final int LEFT_MOTOR_ID = 13;
-        public static final int RIGHT_MOTOR_ID = 16;
+        public static final int WRIST_INTAKE_ID = 9;
         public static final int CONE_SENSOR_ID = 0;
         public static final int CUBE_SENSOR_ID_LEFT = 1;
         public static final int CUBE_SENSOR_ID_RIGHT = 2;
 
         public static final double INTAKE_SPEED = .3;
+        public static final double HOLD_VOLTS = 2;
         public static final int INTAKE_STOP_SPEED = 0;
-        public static final double INTAKE_RELEASE_SPEED = -.2;
+        public static final double INTAKE_RELEASE_SPEED = -0.2;
         public static final double INTAKE_PANIC_SPEED = -1;
-
-        public static final int SOLENOID_FORWARD_CHANNEL = 0;
-        public static final int SOLENOID_REVERSE_CHANNEL = 1;
-    }
-
-    /**
-     * Constants for the dropdown intake.
-     */
-    public static final class DropDownIntake {
-        public static final int LEFT_DROP_MOTOR_ID = 14;
-        public static final int RIGHT_DROP_MOTOR_ID = 15;
-        public static final int DROP_ENCODER_ID = 4;
-        public static final int INTAKE_MOTOR_ID = 17;
-
-        public static final double INTAKE_SPEED = 0.5;
-        public static final double SPIT_SPEED = -0.1;
-        public static final double DROP_VOLTS = -0.2;
-        public static final double RETRACT_VOLTS = 0.3;
-        public static final int STOP_VOLTS = 0;
-
-        /**
-         * PID Constants for the Drop Down Intake motors
-         */
-        public static final class PID {
-            public static final double KP = 0.005;
-            public static final double KI = 0.0;
-            public static final double KD = 0.0;
-            public static final double KS = 0.0;
-            public static final double KG = 1.1;
-            public static final double KV = 0.0;
-        }
+        public static final double STALL_CURRENT = 170;
+        public static final double VOLTAGE_SPIKE_TIME = .8;
 
     }
+
+
 
     /**
      * LED constants.
@@ -299,11 +284,17 @@ public final class Constants {
      * Constants that are necessary for the arm.
      */
     public static final class Arm {
+
+        public static final DoubleJointedArmFeedforward.JointConfig config =
+            new JointConfig(Units.lbsToKilograms(15.77), Units.inchesToMeters(38.3),
+                666.121 + Units.lbsToKilograms(15.77) * Units.inchesToMeters(9.0)
+                    * Units.inchesToMeters(9.0),
+                Units.inchesToMeters(9.0), DCMotor.getNEO(2).withReduction(174.5));
+
         public static final int ARM_ID = 9;
         public static final int ARM_ID_2 = 10;
         public static final int ENCODER_CHANNEL1 = 5;
         public static final int ENCODER_CHANNEL2 = 6;
-        public static final double ENCODER_OFFSET = 0.0;
         // this angle positions are not definite, just using them for testing
         public static final int HOME_POSITION = 226;
         public static final int SECOND_POSITION = 200;
@@ -311,23 +302,22 @@ public final class Constants {
         public static final int FOURTH_POSITION = 160;
         public static final int FIFTH_POSITION = 130;
 
-        public static final double encoder1Offset = 319.2774091; // 9
-        public static final double encoder2Offset = 253.5564923; // 10
+        public static final double encoder1Offset = 112.399; // 9
+        // public static final double encoder2Offset = 253.5564923; // 10
+
+        public static final int SOLENOID_FORWARD_CHANNEL = 0;
+        public static final int SOLENOID_REVERSE_CHANNEL = 1;
 
         /**
          * Arm PID constants.
          */
         public static final class PID {
-            public static final double KP = 0.08;
-            public static final double KI = 0.01;
-            public static final double KD = 0.0;
-            public static final double KF = 0.0;
-            public static final double K_GVOLTS_MIN = 0.40;
-            public static final double K_GVOLTS_MAX = 0.80;
-            public static final double K_SVOLTS = 0.0;
-            public static final double K_WVOLT_SECOND_PER_RAD = 0.0;
-            public static final double K_AVOLT_SECOND_SQUARED_PER_RAD = 0.0;
-            public static final double KP2 = 0.06;
+            public static double kP = 5.0;
+            public static double kI = 0.0;
+            public static double kD = 0.0;
+            public static double MAX_VELOCITY = 20.0;
+            public static double MAX_ACCELERATION = 20.0;
+            public static double TURNOVER_THRESHOLD = 270.0;
         }
     }
 }

@@ -1,15 +1,15 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.lib.util.ArmPosition;
 import frc.robot.subsystems.Arm;
 
 /**
  * This command will move the arm to a requested angle.
  */
-public class ArmIntake extends CommandBase {
-    private Arm arm;
-    private double armAngle = 20;
-    private double wristAngle = 20;
+public class ArmIntake extends SequentialCommandGroup {
+    private double armAngle = -65.0;
+    private double wristAngle = 5.0;
 
     /**
      * Requirements for the command.
@@ -17,20 +17,8 @@ public class ArmIntake extends CommandBase {
      * @param arm Arm subsystem.
      */
     public ArmIntake(Arm arm) {
-        this.arm = arm;
         addRequirements(arm);
-    }
-
-    @Override
-    public void initialize() {
-        arm.enablePID();
-        arm.setArmGoal(armAngle);
-        arm.setWristOffset(wristAngle);
-        // arm.setElevatorGoal(elevatorPosition);
-    }
-
-    @Override
-    public boolean isFinished() {
-        return arm.checkArmInPosition();
+        MoveArm moveArm2 = new MoveArm(arm, () -> new ArmPosition(armAngle, false, wristAngle));
+        addCommands(moveArm2);
     }
 }

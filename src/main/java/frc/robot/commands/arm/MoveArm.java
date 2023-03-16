@@ -1,10 +1,8 @@
 package frc.robot.commands.arm;
 
 import java.util.function.Supplier;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.util.ArmPosition;
-import frc.robot.Constants;
 import frc.robot.subsystems.Arm;
 
 /**
@@ -14,7 +12,7 @@ public class MoveArm extends CommandBase {
     private Arm arm;
     private Supplier<ArmPosition> armPositionSupplier;
     private double armAngle;
-    private double elevatorPosition;
+    private boolean armExtended;
     private double wristAngle;
 
     /**
@@ -22,12 +20,11 @@ public class MoveArm extends CommandBase {
      *
      * @param arm Arm subsystem.
      * @param armAngle Angle at which the arm should move to.
-     * @param elevatorPosition Desired Elevator Position
      */
-    public MoveArm(Arm arm, double armAngle, double elevatorPosition) {
+    public MoveArm(Arm arm, double armAngle, boolean armExtended) {
         this.arm = arm;
         this.armAngle = armAngle;
-        this.elevatorPosition = MathUtil.clamp(elevatorPosition, 0, Constants.Elevator.MAX_ENCODER);
+        this.armExtended = armExtended;
         addRequirements(arm);
     }
 
@@ -46,20 +43,27 @@ public class MoveArm extends CommandBase {
     @Override
     public void initialize() {
         ArmPosition position = armPositionSupplier.get();
-        this.elevatorPosition =
-            MathUtil.clamp(position.getElevatorPosition(), 0, Constants.Elevator.MAX_ENCODER);
         this.wristAngle = position.getWristAngle();
         this.armAngle = position.getArmAngle();
-        arm.enablePID();
         arm.setArmGoal(armAngle);
-        arm.setWristOffset(wristAngle);
-        // arm.setElevatorGoal(elevatorPosition);
+        arm.setWristGoal(wristAngle);
+        // arm.setWristGoal(-25);
+        this.armExtended = position.getArmExtended();
+
+        if (!armExtended) {
+            arm.retractArm();
+        }
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        if (armExtended) {
+            arm.extendArm();
+        }
     }
 
     @Override
     public boolean isFinished() {
-        return arm.checkArmInPosition();
-        // && arm.getWristAligned();
-        // arm.checkElevatorAligned();
+        return arm.armInPosition() && arm.wristInPosition();
     }
 }

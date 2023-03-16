@@ -26,7 +26,7 @@ public class TestArm extends CommandBase {
         GamePiece gamePiece = Scoring.getGamePiece();
         SmartDashboard.putString("Targeted Game Piece", gamePiece.toString());
         ArmPosition position = Scoring.getScoreParameters();
-        arm.enablePID();
+        // arm.enablePID();
         // arm.setArmGoal(position.getArmAngle());
         arm.setArmGoal(60);
         // arm.setElevatorGoal(armExtensionValues.get(Robot.level));

@@ -52,9 +52,9 @@ public class Scoring {
         GamePiece gamePiece = getGamePiece();
         Map<Integer, Double> xCoord = Map.of();
         if (gamePiece == GamePiece.CUBE) {
-            xCoord = Map.of(0, 32.0, 1, 44.5, 2, 34.0);
+            xCoord = Map.of(0, 36.0, 1, 30.0, 2, 29.0);
         } else if (gamePiece == GamePiece.CONE) {
-            xCoord = Map.of(0, 30.0, 1, 31.0, 2, 32.0);
+            xCoord = Map.of(0, 26.0, 1, 33.0, 2, 30.0);
         }
         return xCoord.get(Robot.level);
     }
@@ -104,7 +104,7 @@ public class Scoring {
      * @return Posi
      */
     public static Pose2d getPreScorePosition() {
-        double xPosition = Units.inchesToMeters(50);
+        double xPosition = Units.inchesToMeters(40);
         return getScoreAlignment(xPosition);
     }
 
@@ -115,20 +115,24 @@ public class Scoring {
      */
     public static ArmPosition getScoreParameters() {
         GamePiece gamePiece = getGamePiece();
-        Map<Integer, Double> armExtensionValues = Map.of();
+        Map<Integer, Boolean> armExtensionValues = Map.of();
         Map<Integer, Double> armAngleValues = Map.of();
+        Map<Integer, Double> wristAngleValues = Map.of();
         // SmartDashboard.putNumber("Targeted Level", Robot.level);
         // SmartDashboard.putNumber("Targeted Column", Robot.column);
         SmartDashboard.putString("Targeted Game Piece", gamePiece.toString());
 
         if (gamePiece == GamePiece.CUBE) {
-            armExtensionValues = Map.of(0, 0.0, 1, 0.0, 2, 0.0);
-            armAngleValues = Map.of(0, 20.0, 1, 80.0, 2, 90.0);
+            armExtensionValues = Map.of(0, false, 1, false, 2, false);
+            armAngleValues = Map.of(0, -70.0, 1, 0.0, 2, 0.0);
+            wristAngleValues = Map.of(0, 60.0, 1, -80.0, 2, -20.0);
         } else if (gamePiece == GamePiece.CONE) {
-            armExtensionValues = Map.of(0, 0.0, 1, 0.0, 2, 0.0);
-            armAngleValues = Map.of(0, 30.0, 1, 90.0, 2, 110.0);
+
+            armExtensionValues = Map.of(0, false, 1, false, 2, true);
+            armAngleValues = Map.of(0, -70.0, 1, 7.0, 2, 16.0);
+            wristAngleValues = Map.of(0, 60.0, 1, -60.0, 2, -55.0);
         }
-        return new ArmPosition(armAngleValues.get(Robot.level),
-            armExtensionValues.get(Robot.level));
+        return new ArmPosition(armAngleValues.get(Robot.level), armExtensionValues.get(Robot.level),
+            wristAngleValues.get(Robot.level));
     }
 }

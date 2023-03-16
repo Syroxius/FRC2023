@@ -24,12 +24,12 @@ public class ArmMoving extends CommandBase {
 
     @Override
     public void initialize() {
-        arm.enablePID();
+        // arm.enablePID();
         arm.setArmGoal(goal);
     }
 
     @Override
     public boolean isFinished() {
-        return arm.checkArmInPosition();
+        return false; // arm.checkArmInPosition();
     }
 }

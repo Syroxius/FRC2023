@@ -1,8 +1,6 @@
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.util.Scoring;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.WristIntake;
@@ -21,10 +19,8 @@ public class ScoreArm extends SequentialCommandGroup {
     public ScoreArm(Arm arm, WristIntake wristIntake) {
         addRequirements(arm, wristIntake);
 
-        InstantCommand closeGrabber = new InstantCommand(() -> wristIntake.closeGrabber());
-        WaitCommand waitForGrabber = new WaitCommand(.1);
         MoveArm moveArmFinal = new MoveArm(arm, Scoring::getScoreParameters);
 
-        addCommands(closeGrabber, waitForGrabber, moveArmFinal);
+        addCommands(moveArmFinal);
     }
 }
