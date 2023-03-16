@@ -56,10 +56,10 @@ public class RobotContainer {
             .withPosition(6, 0).withSize(2, 2).withProperties(
                 Map.of("Number of columns", 2, "Number of rows", 1, "Label position", "TOP"));
     public GenericEntry levelWidget = targetGrid.add("Level", Robot.level)
-        .withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("Min", 0, "Max", 2, "Center",
-            0, "Num tick marks", 3, "Show Text", false, "Orientation", "VERTICAL"))
+        .withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("Min", -1, "Max", 2, "Center",
+            -1, "Num tick marks", 4, "Show Text", false, "Orientation", "VERTICAL"))
         .getEntry();
-    public GenericEntry columnWidet = targetGrid.add("Column", Robot.column)
+    public GenericEntry columnWidget = targetGrid.add("Column", Robot.column)
         .withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("Min", 0, "Max", 8, "Center",
             0, "Num tick marks", 5, "Show Text", false, "Orientation", "VERTICAL"))
         .getEntry();
@@ -126,6 +126,7 @@ public class RobotContainer {
         autoChooser.addOption("Move To Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
 
         levelsChooser.setDefaultOption("0", 0);
+        levelsChooser.addOption("-1", -1);
         levelsChooser.addOption("0", 0);
         levelsChooser.addOption("1", 1);
         levelsChooser.addOption("2", 2);
@@ -176,8 +177,14 @@ public class RobotContainer {
 
         operator.povUp().onTrue(
             new DisabledInstantCommand(() -> Robot.level = MathUtil.clamp(Robot.level + 1, 0, 2)));
-        operator.povDown().onTrue(
-            new DisabledInstantCommand(() -> Robot.level = MathUtil.clamp(Robot.level - 1, 0, 2)));
+        operator.povDown().onTrue(new DisabledInstantCommand(() -> {
+            if (Robot.level <= 0) {
+                Robot.column = 0;
+                Robot.level = -1;
+            } else {
+                Robot.level = MathUtil.clamp(Robot.level - 1, 0, 2);
+            }
+        }));
         operator.povRight().onTrue(new DisabledInstantCommand(
             () -> Robot.column = MathUtil.clamp(Robot.column + 1, 0, 8)));
         operator.povLeft().onTrue(new DisabledInstantCommand(

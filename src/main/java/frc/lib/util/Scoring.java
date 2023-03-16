@@ -122,6 +122,10 @@ public class Scoring {
         // SmartDashboard.putNumber("Targeted Column", Robot.column);
         SmartDashboard.putString("Targeted Game Piece", gamePiece.toString());
 
+        if (Robot.level == -1) {
+            return new ArmPosition(-33, false, 46);
+        }
+
         if (gamePiece == GamePiece.CUBE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, false);
             armAngleValues = Map.of(0, -70.0, 1, 0.0, 2, 0.0);

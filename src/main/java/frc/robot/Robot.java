@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
         m_robotContainer.levelWidget.setDouble(level);
-        m_robotContainer.columnWidet.setDouble(column);
+        m_robotContainer.columnWidget.setDouble(column);
         m_robotContainer.gamePieceWidget.setBoolean(Scoring.getGamePiece() == GamePiece.CONE);
     }
 
