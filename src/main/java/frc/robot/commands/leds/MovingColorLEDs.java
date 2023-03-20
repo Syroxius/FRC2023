@@ -28,7 +28,7 @@ public class MovingColorLEDs extends CommandBase {
     public MovingColorLEDs(LEDs leds, Color color, int count, boolean inverted) {
         this.leds = leds;
         this.color = color;
-        this.count = count;
+        this.count = count + 2;
         this.inverted = inverted;
         ledLength = leds.getLength();
         addRequirements(leds);
@@ -57,7 +57,7 @@ public class MovingColorLEDs extends CommandBase {
             leds.setData();
         }
         movingColorDelay += 1;
-        movingColorDelay %= 2;
+        movingColorDelay %= 1;
     }
 
     @Override

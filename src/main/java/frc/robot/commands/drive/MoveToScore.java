@@ -24,7 +24,7 @@ public class MoveToScore extends SequentialCommandGroup {
         // new InstantCommand(
         // () -> SmartDashboard.putNumber("Target Pose X", Scoring.getScorPose2d().getX())),
         // new InstantCommand(() -> swerve.resetOdometry(Scoring.getScorPose2d())));
-        MoveToPos moveToPos = new MoveToPos(swerve, Scoring::getPreScorePosition, false);
+        MoveToPos moveToPos = new MoveToPos(swerve, Scoring::getPreScorePosition, false, 0.2);
         ParallelRaceGroup moveArm = new ScoreArm(arm, wristIntake).withTimeout(1.5);
         MoveToPos moveToScoreFinal = new MoveToPos(swerve, Scoring::getScorPose2d, false);
         addCommands(moveToPos, moveArm, moveToScoreFinal);

@@ -118,7 +118,7 @@ public final class Constants {
         public static final double DRIVE_KA = (0.27 / 12);
 
         /* Swerve Profiling Values */
-        public static final double MAX_SPEED = 3; // meters per second
+        public static final double MAX_SPEED = 4; // meters per second
         public static final double MAX_ANGULAR_VELOCITY = 2;
 
         /* Neutral Modes */
@@ -263,7 +263,7 @@ public final class Constants {
         public static final double INTAKE_SPEED = .3;
         public static final double HOLD_VOLTS = 2;
         public static final int INTAKE_STOP_SPEED = 0;
-        public static final double INTAKE_RELEASE_SPEED = -0.2;
+        public static final double INTAKE_RELEASE_SPEED = -0.3;
         public static final double INTAKE_PANIC_SPEED = -1;
         public static final double STALL_CURRENT = 170;
         public static final double VOLTAGE_SPIKE_TIME = .8;

@@ -54,7 +54,7 @@ public class Scoring {
         if (gamePiece == GamePiece.CUBE) {
             xCoord = Map.of(0, 36.0, 1, 38.0, 2, 29.0);
         } else if (gamePiece == GamePiece.CONE) {
-            xCoord = Map.of(0, 26.0, 1, 33.0, 2, 30.0);
+            xCoord = Map.of(0, 26.0, 1, 33.0, 2, 27.0);
         }
         return xCoord.get(Robot.level);
     }
@@ -123,7 +123,7 @@ public class Scoring {
         SmartDashboard.putString("Targeted Game Piece", gamePiece.toString());
 
         if (Robot.level == -1) {
-            return new ArmPosition(-33, false, 46);
+            return new ArmPosition(-35, false, 46);
         }
 
         if (gamePiece == GamePiece.CUBE) {

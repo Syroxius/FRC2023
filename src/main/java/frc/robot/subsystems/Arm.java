@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.Map;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -9,16 +8,13 @@ import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticHub;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.math.DoubleJointedArmFeedforward;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 
 /**
  * Creates the subsystem for the arm.
@@ -44,11 +40,6 @@ public class Arm extends SubsystemBase {
     ProfiledPIDController wristPIDController = new ProfiledPIDController(Constants.Wrist.PID.kP,
         Constants.Wrist.PID.kI, Constants.Wrist.PID.kD, new TrapezoidProfile.Constraints(
             Constants.Wrist.PID.MAX_VELOCITY, Constants.Wrist.PID.MAX_ACCELERATION));
-
-    private GenericEntry armAngleWidget =
-        RobotContainer.mainDriverTab.add("Arm Angle", armEncoder.getPosition())
-            .withWidget(BuiltInWidgets.kDial).withProperties(Map.of("min", -120, "max", 50))
-            .withPosition(8, 1).withSize(2, 2).getEntry();
 
     private DoubleJointedArmFeedforward feedforward =
         new DoubleJointedArmFeedforward(Constants.Arm.config, Constants.Wrist.config);
@@ -99,7 +90,6 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        armAngleWidget.setDouble(armEncoder.getPosition());
 
         SmartDashboard.putNumber("arm", getArmAngle());
         SmartDashboard.putNumber("wrist", getWristAngle());

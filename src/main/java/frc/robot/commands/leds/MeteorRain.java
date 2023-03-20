@@ -52,7 +52,7 @@ public class MeteorRain extends CommandBase {
             // draw meteor
             for (int j = 0; j < meteorSize; j++) {
                 if ((i - j < numLEDs) && (i - j >= 0)) {
-                    leds.setColor(i - j, Color.kRed);
+                    leds.setColor(i - j, Color.kWhite);
                 }
             }
 
