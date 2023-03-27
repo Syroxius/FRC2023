@@ -79,6 +79,8 @@ public class Arm extends SubsystemBase {
 
         this.wristPIDController.setIntegratorRange(Constants.Wrist.PID.MIN_INTEGRAL,
             Constants.Wrist.PID.MAX_INTEGRAL);
+        wristPIDController.setTolerance(Math.toRadians(2));
+        armPIDController.setTolerance(Math.toRadians(2));
 
         // armPIDController.enableContinuousInput(0, 2 * Math.PI);
         // armPidController2.enableContinuousInput(0, 2 * Math.PI);
@@ -103,6 +105,8 @@ public class Arm extends SubsystemBase {
 
             SmartDashboard.putNumber("set.armPos", armState);
             SmartDashboard.putNumber("set.wristPos", wristState);
+            SmartDashboard.putBoolean("arm.atgoal", armPIDController.atGoal());
+            SmartDashboard.putBoolean("wrist.atgoal", wristPIDController.atGoal());
 
             var voltages =
                 feedforward.calculate(VecBuilder.fill(getArmAngleRad(), getWristAngleRad()));

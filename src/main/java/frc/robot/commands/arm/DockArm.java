@@ -1,5 +1,6 @@
 package frc.robot.commands.arm;
 
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.lib.util.ArmPosition;
 import frc.robot.subsystems.Arm;
@@ -11,6 +12,7 @@ import frc.robot.subsystems.WristIntake;
 public class DockArm extends SequentialCommandGroup {
 
     Arm arm;
+    public static final double wristAngle = 67;
 
     /**
      * Command to dock the arm in the robot
@@ -25,9 +27,13 @@ public class DockArm extends SequentialCommandGroup {
         // MoveArm moveArm1 = new MoveArm(arm, () -> new ArmPosition(20, false, -10));
         // ConditionalCommand cond =
         // new ConditionalCommand(moveArm1, new InstantCommand(), () -> armInside());
-        MoveArm moveArm2 = new MoveArm(arm, () -> new ArmPosition(-85, false, 87.0));
 
-        addCommands(moveArm2);
+        addCommands(new ConditionalCommand(
+            new MoveArm(arm, () -> new ArmPosition(-82.9, false, wristAngle)),
+            new MoveArm(arm, () -> new ArmPosition(CubeIntake.armAngle, false, wristAngle))
+                .withTimeout(0.2)
+                .andThen(new MoveArm(arm, () -> new ArmPosition(-82.9, false, wristAngle))),
+            () -> arm.getWristAngle() > 0));
     }
 
     // private boolean armInside() {

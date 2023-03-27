@@ -25,7 +25,8 @@ import frc.robot.autos.CrossAndDock;
 import frc.robot.autos.LeaveCommunity;
 import frc.robot.autos.Score1;
 import frc.robot.autos.Score1Dock;
-import frc.robot.commands.arm.ArmIntake;
+import frc.robot.commands.arm.ConeIntake;
+import frc.robot.commands.arm.CubeIntake;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.arm.ScoreArm;
 import frc.robot.commands.drive.MoveToEngage;
@@ -35,8 +36,6 @@ import frc.robot.commands.leds.FlashingLEDColor;
 import frc.robot.commands.leds.MovingColorLEDs;
 import frc.robot.commands.leds.PoliceLEDs;
 import frc.robot.commands.wrist.VariableIntake;
-import frc.robot.commands.wrist.WristIntakeIn;
-import frc.robot.commands.wrist.WristIntakeRelease;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Swerve;
@@ -178,10 +177,10 @@ public class RobotContainer {
         operator.leftBumper().onTrue(new FlashingLEDColor(leds, Color.kYellow).withTimeout(15.0));
         operator.rightBumper().onTrue(new FlashingLEDColor(leds, Color.kPurple).withTimeout(15.0));
 
-        operator.a().whileTrue(new WristIntakeIn(s_wristIntake));
-        operator.b().whileTrue(new WristIntakeRelease(s_wristIntake));
-        operator.x().whileTrue(new ArmIntake(s_Arm));
-        operator.y().whileTrue(new DockArm(s_Arm, s_wristIntake).withTimeout(.1).repeatedly());
+        operator.a().onTrue(new ConeIntake(s_Arm));
+        operator.b().onTrue(new CubeIntake(s_Arm));
+        operator.x().onTrue(new ConeIntake(s_Arm));
+        operator.y().onTrue(new DockArm(s_Arm, s_wristIntake).withTimeout(.1).repeatedly());
 
         operator.povUp().onTrue(
             new DisabledInstantCommand(() -> Robot.level = MathUtil.clamp(Robot.level + 1, 0, 2)));
