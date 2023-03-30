@@ -177,8 +177,10 @@ public class RobotContainer {
         operator.leftBumper().onTrue(new FlashingLEDColor(leds, Color.kYellow).withTimeout(15.0));
         operator.rightBumper().onTrue(new FlashingLEDColor(leds, Color.kPurple).withTimeout(15.0));
 
-        operator.a().onTrue(new ConeIntake(s_Arm));
-        operator.b().onTrue(new CubeIntake(s_Arm));
+        operator.a().onTrue(new ConeIntake(s_Arm)
+            .alongWith(new InstantCommand(() -> s_wristIntake.setInvert(true))));
+        operator.b().onTrue(new CubeIntake(s_Arm)
+            .alongWith(new InstantCommand(() -> s_wristIntake.setInvert(false))));
         operator.x().onTrue(new ConeIntake(s_Arm));
         operator.y().onTrue(new DockArm(s_Arm, s_wristIntake).withTimeout(.1).repeatedly());
 
@@ -192,10 +194,14 @@ public class RobotContainer {
                 Robot.level = MathUtil.clamp(Robot.level - 1, 0, 2);
             }
         }));
-        operator.povRight().onTrue(new DisabledInstantCommand(
-            () -> Robot.column = MathUtil.clamp(Robot.column + 1, 0, 8)));
-        operator.povLeft().onTrue(new DisabledInstantCommand(
-            () -> Robot.column = MathUtil.clamp(Robot.column - 1, 0, 8)));
+        operator.povRight().onTrue(new DisabledInstantCommand(() -> {
+            Robot.column = MathUtil.clamp(Robot.column + 1, 0, 8);
+            s_wristIntake.setInvert(Scoring.getGamePiece() == Scoring.GamePiece.CONE);
+        }));
+        operator.povLeft().onTrue(new DisabledInstantCommand(() -> {
+            Robot.column = MathUtil.clamp(Robot.column - 1, 0, 8);
+            s_wristIntake.setInvert(Scoring.getGamePiece() == Scoring.GamePiece.CONE);
+        }));
         operator.rightTrigger().and(operator.leftTrigger())
             .whileTrue(new ScoreArm(s_Arm, s_wristIntake));
         operator.back().toggleOnTrue(new PoliceLEDs(leds));

@@ -233,7 +233,7 @@ public final class Constants {
 
         public static final DoubleJointedArmFeedforward.JointConfig config =
             new JointConfig(Units.lbsToKilograms(1.4), Units.inchesToMeters(38.3), 133.4,
-                Units.inchesToMeters(11.3), DCMotor.getNEO(1).withReduction(10.0));
+                Units.inchesToMeters(9), DCMotor.getNEO(1).withReduction(10));
 
         public static final int WRIST_MOTOR_ID = 12;
         public static final double encoderOffset = 9.802;
@@ -242,11 +242,11 @@ public final class Constants {
          * Wrist PID id constants
          */
         public static final class PID {
-            public static double kP = 1.8;
+            public static double kP = 2.4;
             public static double kI = 0.0;
             public static double kD = 0.0;
-            public static double MAX_VELOCITY = 12.0;
-            public static double MAX_ACCELERATION = 7.0;
+            public static double MAX_VELOCITY = 18.0;
+            public static double MAX_ACCELERATION = 16.0;
             // public static double TURNOVER_THRESHOLD = 12.8;
             public static double TURNOVER_THRESHOLD = 100;
             public static double MAX_INTEGRAL = 0.4;
@@ -312,8 +312,8 @@ public final class Constants {
          * Arm PID constants.
          */
         public static final class PID {
-            public static double kP = 5.0;
-            public static double kI = 0.0;
+            public static double kP = 5.5;
+            public static double kI = 2.5;
             public static double kD = 0.0;
             public static double MAX_VELOCITY = 20.0;
             public static double MAX_ACCELERATION = 20.0;

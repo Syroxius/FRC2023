@@ -128,12 +128,12 @@ public class Scoring {
 
         if (gamePiece == GamePiece.CUBE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, false);
-            armAngleValues = Map.of(0, -70.0, 1, -8.0, 2, 0.0);
-            wristAngleValues = Map.of(0, 60.0, 1, -19.0, 2, -20.0);
+            armAngleValues = Map.of(0, -70.0, 1, -15.0, 2, -3.0);
+            wristAngleValues = Map.of(0, 60.0, 1, -50.0, 2, -50.0);
         } else if (gamePiece == GamePiece.CONE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, true);
-            armAngleValues = Map.of(0, -70.0, 1, 0.0, 2, 18.0);
-            wristAngleValues = Map.of(0, 60.0, 1, -60.0, 2, -55.0);
+            armAngleValues = Map.of(0, -70.0, 1, 7.0, 2, 18.0);
+            wristAngleValues = Map.of(0, 60.0, 1, -96.0, 2, -78.0);
         }
         return new ArmPosition(armAngleValues.get(Robot.level), armExtensionValues.get(Robot.level),
             wristAngleValues.get(Robot.level));

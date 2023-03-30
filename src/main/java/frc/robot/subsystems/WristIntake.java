@@ -16,6 +16,7 @@ public class WristIntake extends SubsystemBase {
     private final WPI_TalonFX wristIntakeMotor = new WPI_TalonFX(Constants.Wrist.WRIST_INTAKE_ID);
 
     private boolean shouldHold = false;
+    private boolean invertForCone = true;
 
     /**
      * Create Wrist Intake Subsystem
@@ -60,7 +61,7 @@ public class WristIntake extends SubsystemBase {
      */
     public void setMotor(double power) {
         shouldHold = false;
-        wristIntakeMotor.set(ControlMode.PercentOutput, power);
+        wristIntakeMotor.set(ControlMode.PercentOutput, (invertForCone ? -1 : 1) * power);
     }
 
     /**
@@ -77,5 +78,9 @@ public class WristIntake extends SubsystemBase {
      */
     public boolean getVoltageSpike(boolean passedTime) {
         return wristIntakeMotor.getStatorCurrent() > Constants.Wrist.STALL_CURRENT;
+    }
+
+    public void setInvert(boolean invert) {
+        invertForCone = invert;
     }
 }
