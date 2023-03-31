@@ -22,13 +22,11 @@ public class WristIntakeIn extends CommandBase {
 
     @Override
     public void initialize() {
-        intake.stopHoldingPiece();
         intake.setMotor(Constants.Wrist.INTAKE_SPEED);
     }
 
     @Override
     public void end(boolean interrupt) {
-        intake.holdPiece();
         intake.setMotor(Constants.Wrist.INTAKE_STOP_SPEED);
     }
 

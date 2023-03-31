@@ -23,6 +23,7 @@ import frc.lib.util.Scoring;
 import frc.lib.util.Scoring.GamePiece;
 import frc.robot.autos.CrossAndDock;
 import frc.robot.autos.LeaveCommunity;
+import frc.robot.autos.MiddleScoreEngage;
 import frc.robot.autos.Score1;
 import frc.robot.autos.Score1Dock;
 import frc.robot.commands.arm.ConeIntake;
@@ -124,8 +125,9 @@ public class RobotContainer {
         s_wristIntake.setDefaultCommand(new VariableIntake(s_wristIntake, operator));
         // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
         autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
-        autoChooser.addOption("Leave Community", new LeaveCommunity(s_Swerve));
-        autoChooser.addOption("Move To Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Move to Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Middle Score and Engage",
+            new MiddleScoreEngage(s_Swerve, s_Arm, s_wristIntake));
 
         levelsChooser.setDefaultOption("0", 0);
         levelsChooser.addOption("-1", -1);
