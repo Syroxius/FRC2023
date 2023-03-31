@@ -45,6 +45,7 @@ public class Arm extends SubsystemBase {
         new DoubleJointedArmFeedforward(Constants.Arm.config, Constants.Wrist.config);
 
     private boolean enablePID = false;
+    private boolean reset0 = true;
 
     /**
      * Arm Subsystem
@@ -98,7 +99,10 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("goal.arm", armPIDController.getGoal().position * 180 / Math.PI);
         SmartDashboard.putNumber("goal.wrist",
             wristPIDController.getGoal().position * 180 / Math.PI);
-
+        if (reset0) {
+            armPIDController.reset(getArmAngleRad());
+            reset0 = false;
+        }
         if (enablePID) {
             double armState = armPIDController.calculate(getArmAngleRad());
             double wristState = wristPIDController.calculate(getWristAngleRad());

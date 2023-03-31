@@ -206,8 +206,10 @@ public class Swerve extends SubsystemBase {
             var result = cam.getEstimatedGlobalPose(swerveOdometry.getEstimatedPosition());
             if (result.isPresent()) {
                 var camPose = result.get();
-                swerveOdometry.addVisionMeasurement(camPose.estimatedPose.toPose2d(),
-                    camPose.timestampSeconds);
+                if (camPose.targetsUsed.get(0).getArea() > 0.7) {
+                    swerveOdometry.addVisionMeasurement(camPose.estimatedPose.toPose2d(),
+                        camPose.timestampSeconds);
+                }
                 field.getObject("Cam Est Pose").setPose(camPose.estimatedPose.toPose2d());
             } else {
                 field.getObject("Cam Est Pose").setPose(new Pose2d(-100, -100, new Rotation2d()));

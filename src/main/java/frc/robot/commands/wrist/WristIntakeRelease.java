@@ -1,6 +1,7 @@
 package frc.robot.commands.wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.lib.util.Scoring;
 import frc.robot.Constants;
 import frc.robot.subsystems.WristIntake;
 
@@ -23,7 +24,7 @@ public class WristIntakeRelease extends CommandBase {
 
     @Override
     public void initialize() {
-        mIntake.stopHoldingPiece();
+        mIntake.setInvert(Scoring.getGamePiece() == Scoring.GamePiece.CONE);
         mIntake.setMotor(Constants.Wrist.INTAKE_RELEASE_SPEED);
     }
 

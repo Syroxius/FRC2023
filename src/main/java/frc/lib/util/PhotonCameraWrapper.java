@@ -11,6 +11,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -85,6 +86,12 @@ public class PhotonCameraWrapper {
      *         create the estimate
      */
     public Optional<EstimatedRobotPose> getEstimatedGlobalPose(Pose2d prevEstimatedRobotPose) {
+        var res = photonCamera.getLatestResult();
+        SmartDashboard.putNumber("photonLatency",
+            Timer.getFPGATimestamp() - res.getTimestampSeconds());
+        if (Timer.getFPGATimestamp() - res.getTimestampSeconds() > 0.4) {
+            return Optional.empty();
+        }
         if (photonPoseEstimator == null) {
             // The field layout failed to load, so we cannot estimate poses.
             return Optional.empty();

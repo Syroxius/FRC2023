@@ -43,7 +43,7 @@ public class Score1Dock extends SequentialCommandGroup {
         CrossAndDock crossAndDock = new CrossAndDock(swerve, arm, wristIntake);
 
         addCommands(moveToScore, wristIntakeRelease,
-            cond.alongWith(new WaitCommand(.5).andThen(dockArm)), crossAndDock);
+            cond.alongWith(new WaitCommand(.2).andThen(dockArm)), crossAndDock);
     }
 
     /**

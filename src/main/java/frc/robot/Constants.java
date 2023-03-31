@@ -263,7 +263,7 @@ public final class Constants {
         public static final double INTAKE_SPEED = -.3;
         public static final double HOLD_VOLTS = 2;
         public static final int INTAKE_STOP_SPEED = 0;
-        public static final double INTAKE_RELEASE_SPEED = 0.3;
+        public static final double INTAKE_RELEASE_SPEED = -0.3;
         public static final double INTAKE_PANIC_SPEED = -1;
         public static final double STALL_CURRENT = 170;
         public static final double VOLTAGE_SPIKE_TIME = .8;
