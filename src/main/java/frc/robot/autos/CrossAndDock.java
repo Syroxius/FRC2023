@@ -5,14 +5,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.util.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.drive.MoveToEngage;
 import frc.robot.commands.drive.MoveToPos;
+import frc.robot.commands.drive.TurnToAngle;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristIntake;
@@ -40,9 +41,10 @@ public class CrossAndDock extends SequentialCommandGroup {
                 new Rotation2d(0)),
             true);
         MoveToEngage engage = new MoveToEngage(swerve, arm, wrist);
-        ConditionalCommand toDockOrNotToDock =
-            new ConditionalCommand(centerWithDock.andThen(engage), new InstantCommand(),
-                () -> RobotContainer.enableDockWidget.getBoolean(true));
+        TurnToAngle turnAround = new TurnToAngle(swerve, 0, false);
+        ConditionalCommand toDockOrNotToDock = new ConditionalCommand(
+            centerWithDock.andThen(engage), new WaitCommand(1).andThen(turnAround),
+            () -> RobotContainer.enableDockWidget.getBoolean(true));
 
 
         addCommands(leaveCommunity.alongWith(dockArm), toDockOrNotToDock);

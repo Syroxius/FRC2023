@@ -10,6 +10,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 /**
@@ -20,11 +21,15 @@ public class TurnToAngle extends CommandBase {
     private Swerve swerve;
     private boolean isRelative;
     private double goal;
-    private HolonomicDriveController holonomicDriveController;
+    private HolonomicDriveController holonomicDriveController =
+        new HolonomicDriveController(new PIDController(0, 0, 0), new PIDController(0, 0, 0),
+            new ProfiledPIDController(Constants.SwerveTransformPID.PID_TKP / 2,
+                Constants.SwerveTransformPID.PID_TKI, Constants.SwerveTransformPID.PID_TKD,
+                new TrapezoidProfile.Constraints(Constants.SwerveTransformPID.MAX_ANGULAR_VELOCITY,
+                    Constants.SwerveTransformPID.MAX_ANGULAR_ACCELERATION)));
     private Pose2d startPos = new Pose2d();
     private Pose2d targetPose2d = new Pose2d();
-    private double kMaxAngularSpeedRadiansPerSecond = Math.PI * 16;
-    private double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI * 16;
+    private int finishCounter = 0;
 
     /**
      * Turns robot to specified angle. Uses absolute rotation on field.
@@ -34,21 +39,12 @@ public class TurnToAngle extends CommandBase {
      * @param isRelative Whether the angle is relative to the current angle: true = relative, false
      *        = absolute
      */
-
     public TurnToAngle(Swerve swerve, double angle, boolean isRelative) {
         addRequirements(swerve);
         this.swerve = swerve;
         this.goal = angle;
         this.isRelative = isRelative;
-
-        PIDController xcontroller = new PIDController(0, 0, 0);
-        PIDController ycontroller = new PIDController(0, 0, 0);
-        ProfiledPIDController thetacontroller =
-            new ProfiledPIDController(4, 0, 0, new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared));
-        holonomicDriveController =
-            new HolonomicDriveController(xcontroller, ycontroller, thetacontroller);
-        holonomicDriveController.setTolerance(new Pose2d(1, 1, Rotation2d.fromDegrees(0.5)));
+        holonomicDriveController.setTolerance(new Pose2d(1, 1, Rotation2d.fromDegrees(1)));
 
     }
 
@@ -82,7 +78,11 @@ public class TurnToAngle extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return holonomicDriveController.atReference();
-
+        if (holonomicDriveController.atReference()) {
+            finishCounter++;
+        } else {
+            finishCounter = 0;
+        }
+        return finishCounter > 2;
     }
 }
