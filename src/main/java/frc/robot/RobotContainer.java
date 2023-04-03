@@ -26,6 +26,7 @@ import frc.robot.autos.MiddleScoreEngage;
 import frc.robot.autos.Score1;
 import frc.robot.autos.Score1Dock;
 import frc.robot.commands.arm.ConeIntake;
+import frc.robot.commands.arm.ConeUpIntake;
 import frc.robot.commands.arm.CubeIntake;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.arm.ScoreArm;
@@ -36,7 +37,6 @@ import frc.robot.commands.leds.FlashingLEDColor;
 import frc.robot.commands.leds.MovingColorLEDs;
 import frc.robot.commands.leds.PoliceLEDs;
 import frc.robot.commands.wrist.VariableIntake;
-import frc.robot.commands.wrist.WristIntakeRelease;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Swerve;
@@ -54,7 +54,7 @@ public class RobotContainer {
     public static ShuffleboardTab autoTab = Shuffleboard.getTab("Auto");
     private ShuffleboardLayout targetGrid =
         RobotContainer.mainDriverTab.getLayout("Next Position", BuiltInLayouts.kGrid)
-            .withPosition(6, 0).withSize(2, 4).withProperties(
+            .withPosition(6, 0).withSize(2, 5).withProperties(
                 Map.of("Number of columns", 2, "Number of rows", 1, "Label position", "TOP"));
     public GenericEntry levelWidget = targetGrid.add("Level", Robot.level)
         .withWidget(BuiltInWidgets.kNumberBar).withProperties(Map.of("Min", -1, "Max", 2, "Center",
@@ -68,7 +68,7 @@ public class RobotContainer {
         mainDriverTab.add("Game Piece", Scoring.getGamePiece() == GamePiece.CONE)
             .withWidget(BuiltInWidgets.kBooleanBox)
             .withProperties(Map.of("Color when true", "yellow", "Color when false", "purple"))
-            .withPosition(6, 4).withSize(2, 1).getEntry();
+            .withPosition(8, 2).withSize(2, 2).getEntry();
 
     private final SendableChooser<Integer> levelsChooser = new SendableChooser<>();
     private final SendableChooser<Integer> columnsChooser = new SendableChooser<>();
@@ -113,6 +113,12 @@ public class RobotContainer {
     // private final DropIntake s_dIntake = new DropIntake();
     private final Arm s_Arm = new Arm(ph);
     private final WristIntake s_wristIntake = new WristIntake();
+
+
+    public GenericEntry photonSeeing = mainDriverTab
+        .add("Photon Good", s_Swerve.cam.latency() < 0.6).withWidget(BuiltInWidgets.kBooleanBox)
+        .withProperties(Map.of("Color when true", "green", "Color when false", "red"))
+        .withPosition(8, 0).withSize(2, 2).getEntry();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -180,9 +186,10 @@ public class RobotContainer {
 
         operator.a().onTrue(new ConeIntake(s_Arm)
             .alongWith(new InstantCommand(() -> s_wristIntake.setInvert(true))));
-        operator.b().onTrue(new CubeIntake(s_Arm)
+        operator.x().onTrue(new CubeIntake(s_Arm)
             .alongWith(new InstantCommand(() -> s_wristIntake.setInvert(false))));
-        operator.x().whileTrue(new WristIntakeRelease(s_wristIntake));
+        operator.b().onTrue(new ConeUpIntake(s_Arm)
+            .alongWith(new InstantCommand(() -> s_wristIntake.setInvert(true))));
         operator.y().onTrue(new DockArm(s_Arm, s_wristIntake).withTimeout(.1).repeatedly());
 
         operator.povUp().onTrue(

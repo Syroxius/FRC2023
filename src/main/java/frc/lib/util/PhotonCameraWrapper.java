@@ -79,6 +79,11 @@ public class PhotonCameraWrapper {
         return Optional.empty();
     }
 
+    public double latency() {
+        var res = photonCamera.getLatestResult();
+        return Timer.getFPGATimestamp() - res.getTimestampSeconds();
+    }
+
     /**
      * @param prevEstimatedRobotPose The current best guess at robot pose
      *

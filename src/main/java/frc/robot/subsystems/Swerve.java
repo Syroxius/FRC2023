@@ -28,7 +28,7 @@ import frc.robot.RobotContainer;
 public class Swerve extends SubsystemBase {
     private AHRS gyro = new AHRS(Constants.Swerve.navXID);
     private SwerveDrivePoseEstimator swerveOdometry;
-    private PhotonCameraWrapper cam = new PhotonCameraWrapper(Constants.CameraConstants.CAMERA_NAME,
+    public PhotonCameraWrapper cam = new PhotonCameraWrapper(Constants.CameraConstants.CAMERA_NAME,
         Constants.CameraConstants.KCAMERA_TO_ROBOT.inverse());
     private SwerveModule[] swerveMods;
     private double fieldOffset = gyro.getYaw();
@@ -54,8 +54,6 @@ public class Swerve extends SubsystemBase {
         swerveOdometry = new SwerveDrivePoseEstimator(Constants.Swerve.SWERVE_KINEMATICS, getYaw(),
             getPositions(), new Pose2d());
 
-        RobotContainer.mainDriverTab.add("Field Pos", field).withPosition(8, 0)
-            .withWidget(BuiltInWidgets.kField).withSize(5, 4);
         RobotContainer.autoTab.add("Field Pos", field).withWidget(BuiltInWidgets.kField)
             .withSize(8, 6) // make the widget 2x1
             .withPosition(0, 0); // place it in the top-left corner
@@ -196,6 +194,7 @@ public class Swerve extends SubsystemBase {
     public void periodic() {
         Rotation2d yaw = getYaw();
         swerveOdometry.update(yaw, getPositions());
+        SmartDashboard.putBoolean("photonGood", cam.latency() < 0.6);
         if (!hasInitialized /* || DriverStation.isDisabled() */) {
             var robotPose = cam.getInitialPose();
             if (robotPose.isPresent()) {

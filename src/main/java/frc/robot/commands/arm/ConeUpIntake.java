@@ -9,18 +9,18 @@ import frc.robot.subsystems.Arm;
 /**
  * This command will move the arm to a requested angle.
  */
-public class ConeIntake extends SequentialCommandGroup {
+public class ConeUpIntake extends SequentialCommandGroup {
     // private double armAngle = -63.0;
     // private double wristAngle = 18.0;
-    private double armAngle = -63.0;
-    private double wristAngle = 18.0;
+    public static final double armAngle = -31.0;
+    public static final double wristAngle = -47.0;
 
     /**
      * Requirements for the command.
      *
      * @param arm Arm subsystem.
      */
-    public ConeIntake(Arm arm) {
+    public ConeUpIntake(Arm arm) {
         addRequirements(arm);
         MoveArm moveArm2 = new MoveArm(arm, () -> new ArmPosition(armAngle, false, wristAngle));
         MoveArm moveArm =
