@@ -36,4 +36,7 @@ public class Score1 extends SequentialCommandGroup {
         addCommands(moveToScore, wristIntakeRelease,
             moveToPos.alongWith(new WaitCommand(.5).andThen(dockArm)));
     }
+
+
+
 }

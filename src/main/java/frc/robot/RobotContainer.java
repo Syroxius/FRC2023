@@ -18,18 +18,25 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.lib.util.DisabledInstantCommand;
 import frc.lib.util.Scoring;
 import frc.lib.util.Scoring.GamePiece;
 import frc.robot.autos.CrossAndDock;
+import frc.robot.autos.DoubleScore;
 import frc.robot.autos.MiddleScoreEngage;
 import frc.robot.autos.Score1;
 import frc.robot.autos.Score1Dock;
+import frc.robot.autos.SecondGamePiece;
+import frc.robot.autos.SecondGamePieceScore;
+import frc.robot.autos.TestTrajectory;
+import frc.robot.autos.TripleScore;
 import frc.robot.commands.arm.ConeIntake;
 import frc.robot.commands.arm.ConeUpIntake;
 import frc.robot.commands.arm.CubeIntake;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.arm.ScoreArm;
+import frc.robot.commands.arm.VariableArm;
 import frc.robot.commands.drive.MoveToEngage;
 import frc.robot.commands.drive.MoveToScore;
 import frc.robot.commands.drive.TeleopSwerve;
@@ -128,7 +135,7 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(new TeleopSwerve(s_Swerve, driver,
             Constants.Swerve.IS_FIELD_RELATIVE, Constants.Swerve.IS_OPEN_LOOP, s_Arm));
         s_wristIntake.setDefaultCommand(new VariableIntake(s_wristIntake, operator));
-        // autoChooser.addOption(resnickAuto, new ResnickAuto(s_Swerve));
+        leds.setDefaultCommand(new MovingColorLEDs(leds, Color.kRed, 8, false));
         autoChooser.setDefaultOption("Do Nothing", new WaitCommand(1));
         autoChooser.addOption("Move to Score", new MoveToScore(s_Swerve, s_Arm, s_wristIntake));
         autoChooser.addOption("Middle Score and Engage",
@@ -153,9 +160,18 @@ public class RobotContainer {
         columnsChooser.addOption("6", 6);
         columnsChooser.addOption("7", 7);
         columnsChooser.addOption("8", 8);
+        autoChooser.addOption("Cross and Dock", new CrossAndDock(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Score 1 Dock", new Score1Dock(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Score 1", new Score1(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Test Trajectory",
+            new TestTrajectory(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Second Game Piece",
+            new SecondGamePiece(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("SecondGamePieceScore",
+            new SecondGamePieceScore(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Double Score", new DoubleScore(s_Swerve, s_Arm, s_wristIntake));
+        autoChooser.addOption("Triple Score", new TripleScore(s_Swerve, s_Arm, s_wristIntake));
         // Configure the button bindings
-        leds.setDefaultCommand(new MovingColorLEDs(leds, Color.kRed, 8, false));
-        // leds.setDefaultCommand(new Twinkle(leds, 60, new Color[] {Color.kRed}));
         configureButtonBindings();
     }
 
@@ -167,7 +183,6 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-
         driver.start().onTrue(new InstantCommand(() -> s_Swerve.resetInitialized()));
 
         driver.y().onTrue(new DisabledInstantCommand(() -> s_Swerve.resetFieldRelativeOffset()));
@@ -213,6 +228,8 @@ public class RobotContainer {
         operator.rightTrigger().and(operator.leftTrigger())
             .whileTrue(new ScoreArm(s_Arm, s_wristIntake));
         operator.back().toggleOnTrue(new PoliceLEDs(leds));
+        new Trigger(() -> Math.abs(operator.getRightY()) > 0.2)
+            .whileTrue(new VariableArm(s_Arm, operator));
 
         // operator.povUp().whileTrue(new MoveArm(s_Arm, 110, 0));
         // operator.povDown().whileTrue(new MoveArm(s_Arm, 45, 0));

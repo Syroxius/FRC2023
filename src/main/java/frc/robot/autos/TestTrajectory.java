@@ -6,12 +6,9 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.util.FieldConstants;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.drive.MoveToPos;
-import frc.robot.commands.drive.MoveToScore;
-import frc.robot.commands.wrist.WristIntakeRelease;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.WristIntake;
@@ -19,7 +16,7 @@ import frc.robot.subsystems.WristIntake;
 /**
  * Score1Dock Auto.
  */
-public class Score1Dock extends SequentialCommandGroup {
+public class TestTrajectory extends SequentialCommandGroup {
 
     Swerve swerve;
     Pose2d aprilTag8 = FieldConstants.aprilTags.get(8).toPose2d();
@@ -32,18 +29,15 @@ public class Score1Dock extends SequentialCommandGroup {
      * @param arm Arm
      * @param wristIntake Wrist Intake
      */
-    public Score1Dock(Swerve swerve, Arm arm, WristIntake wristIntake) {
+    public TestTrajectory(Swerve swerve, Arm arm, WristIntake wristIntake) {
         this.swerve = swerve;
-        MoveToScore moveToScore = new MoveToScore(swerve, arm, wristIntake);
-        ParallelRaceGroup wristIntakeRelease = new WristIntakeRelease(wristIntake).withTimeout(.5);
-        MoveToPos move6 = new MoveToPos(swerve, () -> get6position(), true);
-        MoveToPos move8 = new MoveToPos(swerve, () -> get8position(), true);
+        MoveToPos move6 = new MoveToPos(swerve, () -> get6position(), true, .1);
+        MoveToPos move8 = new MoveToPos(swerve, () -> get8position(), true, .1);
         ConditionalCommand cond = new ConditionalCommand(move6, move8, () -> chooseSide());
         ParallelRaceGroup dockArm = new DockArm(arm, wristIntake).withTimeout(1);
         LeaveCommunityAndDock crossAndDock = new LeaveCommunityAndDock(swerve, arm, wristIntake);
 
-        addCommands(moveToScore, wristIntakeRelease,
-            cond.alongWith(new WaitCommand(.2).andThen(dockArm)), crossAndDock);
+        addCommands(dockArm, cond, crossAndDock);
     }
 
     /**

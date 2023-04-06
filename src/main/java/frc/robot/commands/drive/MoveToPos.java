@@ -44,10 +44,23 @@ public class MoveToPos extends CommandBase {
      */
     public MoveToPos(Swerve swerve, Supplier<Pose2d> pose2dSupplier, boolean flipForRed,
         double tol) {
+        this(swerve, pose2dSupplier, flipForRed, 0.05, Constants.SwerveTransformPID.PID_TKP);
+    }
+
+    /**
+     * Move to Position
+     *
+     * @param swerve Swerve Drive Subsystem
+     * @param pose2dSupplier Supplier of Pose2d
+     * @param flipForRed Flip the Pose2d relative to the Red Alliance
+     */
+    public MoveToPos(Swerve swerve, Supplier<Pose2d> pose2dSupplier, boolean flipForRed, double tol,
+        double turnP) {
         this.swerve = swerve;
         this.pose2dSupplier = pose2dSupplier;
         this.flipForRed = flipForRed;
         this.addRequirements(swerve);
+        holonomicDriveController.getThetaController().setP(turnP);
         holonomicDriveController.setTolerance(new Pose2d(tol, tol, Rotation2d.fromDegrees(1)));
     }
 
@@ -61,6 +74,7 @@ public class MoveToPos extends CommandBase {
     public MoveToPos(Swerve swerve, Supplier<Pose2d> pose2dSupplier, boolean flipForRed) {
         this(swerve, pose2dSupplier, flipForRed, 0.05);
     }
+
 
     /**
      * Move to Position

@@ -19,7 +19,7 @@ public class ClimbPlatform extends CommandBase {
     private double startTime;
     private int endCount = 0;
 
-    private PIDController pidController = new PIDController(-.00825, 0, 0);
+    private PIDController pidController = new PIDController(-.006, 0, 0);
 
     /**
      * Test April tag transform
@@ -47,7 +47,7 @@ public class ClimbPlatform extends CommandBase {
             beenTilted = true;
             startTime = Timer.getFPGATimestamp();
         }
-        if (beenTilted && Timer.getFPGATimestamp() > startTime + .8) {
+        if (beenTilted && Timer.getFPGATimestamp() > startTime + .5) {
             speed = pidController.calculate(swerve.getRoll());
         }
         SmartDashboard.putBoolean("Been Tilted", beenTilted);

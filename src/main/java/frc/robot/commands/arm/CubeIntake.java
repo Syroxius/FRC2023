@@ -10,7 +10,7 @@ import frc.robot.subsystems.Arm;
  * This command will move the arm to a requested angle.
  */
 public class CubeIntake extends SequentialCommandGroup {
-    public static final double armAngle = -48.0;
+    public static final double armAngle = -46;
     public static final double wristAngle = -69.0;
 
     /**

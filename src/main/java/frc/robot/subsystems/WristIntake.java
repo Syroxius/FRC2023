@@ -44,6 +44,15 @@ public class WristIntake extends SubsystemBase {
     }
 
     /**
+     * Set power of intake motors ignoring direction
+     *
+     * @param power power of motors from -1 to 1
+     */
+    public void setMotorRaw(double power) {
+        wristIntakeMotor.set(ControlMode.PercentOutput, power);
+    }
+
+    /**
      * Releases GPs in intake (if any). Primarily used to prevent the accidental holding of multiple
      * GPs penalty.
      */

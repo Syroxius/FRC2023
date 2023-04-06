@@ -32,12 +32,12 @@ public final class Constants {
         public static final double PID_YKP = 2;
         public static final double PID_YKI = 0.0;
         public static final double PID_YKD = 0.0;
-        public static final double PID_TKP = 9.0;
+        public static final double PID_TKP = 3.0;
         public static final double PID_TKI = 0.0;
         public static final double PID_TKD = 0.0;
 
         public static final double MAX_ANGULAR_VELOCITY = 9.0;
-        public static final double MAX_ANGULAR_ACCELERATION = 9;
+        public static final double MAX_ANGULAR_ACCELERATION = 9 * 5;
         public static final double STD_DEV_MOD = 2.0;
     }
 
@@ -140,7 +140,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 6;
             public static final int ANGLE_MOTOR_ID = 8;
             public static final int CAN_CODER_ID = 4;
-            public static final double ANGLE_OFFSET = 139.219;
+            public static final double ANGLE_OFFSET = 138.604;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -152,7 +152,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 1;
             public static final int ANGLE_MOTOR_ID = 4;
             public static final int CAN_CODER_ID = 1;
-            public static final double ANGLE_OFFSET = 279.796;
+            public static final double ANGLE_OFFSET = 280.107;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -164,7 +164,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 3;
             public static final int ANGLE_MOTOR_ID = 2;
             public static final int CAN_CODER_ID = 2;
-            public static final double ANGLE_OFFSET = 122.168;
+            public static final double ANGLE_OFFSET = 121.553;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -176,7 +176,7 @@ public final class Constants {
             public static final int DRIVE_MOTOR_ID = 7;
             public static final int ANGLE_MOTOR_ID = 5;
             public static final int CAN_CODER_ID = 3;
-            public static final double ANGLE_OFFSET = 248.115;
+            public static final double ANGLE_OFFSET = 248.027;
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(
                 DRIVE_MOTOR_ID, ANGLE_MOTOR_ID, CAN_CODER_ID, ANGLE_OFFSET);
         }
@@ -260,10 +260,10 @@ public final class Constants {
         public static final int CUBE_SENSOR_ID_LEFT = 1;
         public static final int CUBE_SENSOR_ID_RIGHT = 2;
 
-        public static final double INTAKE_SPEED = -.3;
+        public static final double INTAKE_SPEED = 0.3;
         public static final double HOLD_VOLTS = 2;
         public static final int INTAKE_STOP_SPEED = 0;
-        public static final double INTAKE_RELEASE_SPEED = -0.3;
+        public static final double INTAKE_RELEASE_SPEED = 0.3;
         public static final double INTAKE_PANIC_SPEED = -1;
         public static final double STALL_CURRENT = 170;
         public static final double VOLTAGE_SPIKE_TIME = .8;

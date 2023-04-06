@@ -24,7 +24,7 @@ public class WristIntakeRelease extends CommandBase {
 
     @Override
     public void initialize() {
-        mIntake.setInvert(Scoring.getGamePiece() == Scoring.GamePiece.CONE);
+        mIntake.setInvert(Scoring.getGamePiece() == Scoring.GamePiece.CUBE);
         mIntake.setMotor(Constants.Wrist.INTAKE_RELEASE_SPEED);
     }
 
