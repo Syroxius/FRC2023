@@ -47,7 +47,7 @@ public class ClimbPlatform extends CommandBase {
             beenTilted = true;
             startTime = Timer.getFPGATimestamp();
         }
-        if (beenTilted && Timer.getFPGATimestamp() > startTime + .5) {
+        if (beenTilted && Timer.getFPGATimestamp() > startTime + .8) {
             speed = pidController.calculate(swerve.getRoll());
         }
         SmartDashboard.putBoolean("Been Tilted", beenTilted);

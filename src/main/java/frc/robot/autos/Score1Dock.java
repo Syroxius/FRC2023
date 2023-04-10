@@ -4,10 +4,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.lib.util.DynamicWaitCommand;
 import frc.lib.util.FieldConstants;
+import frc.robot.RobotContainer;
 import frc.robot.commands.arm.DockArm;
 import frc.robot.commands.drive.MoveToPos;
 import frc.robot.commands.drive.MoveToScore;
@@ -40,10 +43,14 @@ public class Score1Dock extends SequentialCommandGroup {
         MoveToPos move8 = new MoveToPos(swerve, () -> get8position(), true);
         ConditionalCommand cond = new ConditionalCommand(move6, move8, () -> chooseSide());
         ParallelRaceGroup dockArm = new DockArm(arm, wristIntake).withTimeout(1);
-        LeaveCommunityAndDock crossAndDock = new LeaveCommunityAndDock(swerve, arm, wristIntake);
+        ConditionalCommand waitToDock = new ConditionalCommand(
+            new DynamicWaitCommand(() -> RobotContainer.autoWaitChooser.getSelected()),
+            new InstantCommand(), () -> RobotContainer.autoWaitChooser.getSelected() > 0);
+
+        CrossAndDock crossAndDock = new CrossAndDock(swerve, arm, wristIntake);
 
         addCommands(moveToScore, wristIntakeRelease,
-            cond.alongWith(new WaitCommand(.2).andThen(dockArm)), crossAndDock);
+            cond.alongWith(new WaitCommand(.2).andThen(dockArm)), waitToDock, crossAndDock);
     }
 
     /**

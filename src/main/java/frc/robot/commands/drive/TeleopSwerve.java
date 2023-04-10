@@ -54,7 +54,7 @@ public class TeleopSwerve extends CommandBase {
         double speed = Constants.Swerve.MAX_SPEED;
         if (arm.getArmAngle() > -70) {
             angle_speed /= 3;
-            speed *= 0.60;
+            speed *= 0.80;
         }
 
         Translation2d translation = new Translation2d(yaxis, xaxis).times(speed);

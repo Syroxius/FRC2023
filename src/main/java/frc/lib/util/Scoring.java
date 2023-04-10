@@ -128,7 +128,7 @@ public class Scoring {
 
         if (gamePiece == GamePiece.CUBE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, false);
-            armAngleValues = Map.of(0, -70.0, 1, -15.0, 2, -3.0);
+            armAngleValues = Map.of(0, -70.0, 1, -15.0, 2, 3.0);
             wristAngleValues = Map.of(0, 60.0, 1, -50.0, 2, -50.0);
         } else if (gamePiece == GamePiece.CONE) {
             armExtensionValues = Map.of(0, false, 1, false, 2, true);

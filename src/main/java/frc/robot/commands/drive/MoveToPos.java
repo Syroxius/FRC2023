@@ -26,7 +26,7 @@ public class MoveToPos extends CommandBase {
     private boolean flipForRed = true;
 
     HolonomicDriveController holonomicDriveController = new HolonomicDriveController(
-        new PIDController(Constants.SwerveTransformPID.PID_XKP,
+        new PIDController(Constants.SwerveTransformPID.PID_XKP + 0.5,
             Constants.SwerveTransformPID.PID_XKI, Constants.SwerveTransformPID.PID_XKD),
         new PIDController(Constants.SwerveTransformPID.PID_YKP,
             Constants.SwerveTransformPID.PID_YKI, Constants.SwerveTransformPID.PID_YKD),

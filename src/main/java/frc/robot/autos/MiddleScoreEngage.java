@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.lib.util.DynamicWaitCommand;
 import frc.lib.util.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.arm.DockArm;
@@ -40,10 +41,13 @@ public class MiddleScoreEngage extends SequentialCommandGroup {
         MoveToPos move7 = new MoveToPos(swerve, () -> get7Position(), true);
         ParallelRaceGroup dockArm = new DockArm(arm, wristIntake).withTimeout(1);
         ClimbPlatformAuto climbPlatform = new ClimbPlatformAuto(swerve);
+        ConditionalCommand waitToDock = new ConditionalCommand(
+            new DynamicWaitCommand(() -> RobotContainer.autoWaitChooser.getSelected()),
+            new InstantCommand(), () -> RobotContainer.autoWaitChooser.getSelected() > 0);
         ConditionalCommand toDockOrNotToDock = new ConditionalCommand(climbPlatform,
             new InstantCommand(), () -> RobotContainer.enableDockWidget.getBoolean(true));
 
-        addCommands(moveToScore, wristIntakeRelease,
+        addCommands(moveToScore, wristIntakeRelease, waitToDock,
             move7.alongWith(new WaitCommand(.5).andThen(dockArm)), toDockOrNotToDock);
     }
 
