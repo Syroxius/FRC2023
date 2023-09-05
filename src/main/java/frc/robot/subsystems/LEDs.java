@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class LEDs extends SubsystemBase {
     private AddressableLEDBuffer controLedBuffer;
+    @SuppressWarnings("IOCheck")
     private AddressableLED addressableLED;
 
     /**
