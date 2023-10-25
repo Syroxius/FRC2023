@@ -308,6 +308,8 @@ public final class Constants {
         public static final int SOLENOID_FORWARD_CHANNEL = 0;
         public static final int SOLENOID_REVERSE_CHANNEL = 1;
 
+        public static final int ARM_PWM_DIO = 9;
+
         /**
          * Arm PID constants.
          */

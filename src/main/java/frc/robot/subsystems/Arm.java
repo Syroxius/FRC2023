@@ -9,6 +9,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticHub;
@@ -27,6 +28,8 @@ public class Arm extends SubsystemBase {
         new CANSparkMax(Constants.Arm.ARM_ID_2, MotorType.kBrushless);
     private final AbsoluteEncoder armEncoder = armMotor1.getAbsoluteEncoder(Type.kDutyCycle);
     private final DoubleSolenoid armSolenoid;
+
+    public DigitalInput armSense = new DigitalInput(Constants.Arm.ARM_PWM_DIO);
 
     ProfiledPIDController armPIDController =
         new ProfiledPIDController(Constants.Arm.PID.kP, Constants.Arm.PID.kI, Constants.Arm.PID.kD,
@@ -106,6 +109,7 @@ public class Arm extends SubsystemBase {
     public void periodic() {
 
         SmartDashboard.putNumber("arm", getArmAngle());
+        SmartDashboard.putBoolean("armSense", armSense.get());
         SmartDashboard.putNumber("wrist", getWristAngle());
         SmartDashboard.putNumber("goal.arm", armPIDController.getGoal().position * 180 / Math.PI);
         SmartDashboard.putNumber("goal.wrist",
@@ -222,5 +226,21 @@ public class Arm extends SubsystemBase {
      */
     public void retractArm() {
         armSolenoid.set(Value.kForward);
+    }
+
+    /**
+     * Set motors to coast mode
+     */
+    public void setCoastMode() {
+        armMotor1.setIdleMode(IdleMode.kCoast);
+        armMotor2.setIdleMode(IdleMode.kCoast);
+    }
+
+    /**
+     * Set motors to brake mode
+     */
+    public void setBrakeMode() {
+        armMotor1.setIdleMode(IdleMode.kBrake);
+        armMotor2.setIdleMode(IdleMode.kBrake);
     }
 }

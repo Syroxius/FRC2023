@@ -3,6 +3,7 @@ package frc.robot;
 import java.util.Map;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PneumaticHub;
 import edu.wpi.first.wpilibj.XboxController;
@@ -183,6 +184,14 @@ public class RobotContainer {
      * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+
+        Trigger armSensor =
+            new Trigger(() -> this.s_Arm.armSense.get() && DriverStation.isDisabled());
+
+        armSensor.onTrue(new DisabledInstantCommand(() -> s_Arm.setCoastMode()));
+
+        armSensor.onFalse(new DisabledInstantCommand(() -> s_Arm.setBrakeMode()));
+
         /* Driver Buttons */
         driver.start().onTrue(new InstantCommand(() -> s_Swerve.resetInitialized()));
 
