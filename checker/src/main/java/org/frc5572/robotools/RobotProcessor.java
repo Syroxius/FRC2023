@@ -69,7 +69,7 @@ public class RobotProcessor extends AbstractProcessor {
         if (fatal) {
             throw new RuntimeException("Checks failed!");
         }
-        return true;
+        return false;
     }
 
 }
