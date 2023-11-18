@@ -6,6 +6,11 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
 
+repositories {
+    mavenLocal()
+    maven { url 'https://jitpack.io' }
+}
+
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -69,7 +74,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
-    annotationProcessor project(":checker")
+    annotationProcessor 'com.github.Frc5572:RobotTools:main-SNAPSHOT'
 }
 
 test {
