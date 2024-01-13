@@ -53,7 +53,7 @@
 *.war
 *.nar
 *.ear
-# *.zip
+*.zip
 *.tar.gz
 *.rar
 
@@ -139,7 +139,6 @@ $RECYCLE.BIN/
 .gradle
 /build/
 /checker/build/
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -159,5 +158,21 @@ gradle-app.setting
 .settings/
 bin/
 
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Fleet
+.fleet
+
 # Simulation GUI and other tools window save file
 *-window.json
+
+# Simulation data log directory
+logs/
+
+# Folder that has CTRE Phoenix Sim device config storage
+ctre_sim/
