@@ -2,8 +2,9 @@ package frc.lib.util.pathplanner;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.path.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.Trajectory.State;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.lib.util.FieldConstants;
 
@@ -12,7 +13,7 @@ import frc.lib.util.FieldConstants;
  */
 public class PathPlannerTrajectory1 extends PathPlannerTrajectory {
 
-    /** 
+    /**
      * Flip path to break PP's convention
      */
     public static PathPlannerState transformStateForAlliance(PathPlannerState state,
@@ -45,9 +46,9 @@ public class PathPlannerTrajectory1 extends PathPlannerTrajectory {
             return state;
         }
     }
-    
 
-    /** 
+
+    /**
      * Flip path to break PP's convention
      */
     public static PathPlannerTrajectory transformTrajectoryForAlliance(
