@@ -10,7 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.util.FieldConstants;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
@@ -18,7 +18,7 @@ import frc.robot.subsystems.Swerve;
 /**
  * Move to Position
  */
-public class MoveToPos extends CommandBase {
+public class MoveToPos extends Command {
 
     public Swerve swerve;
     public Pose2d pose2d;

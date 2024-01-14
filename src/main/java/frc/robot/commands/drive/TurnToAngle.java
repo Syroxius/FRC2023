@@ -9,14 +9,14 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 /**
  * This command will turn the robot to a specified angle.
  */
-public class TurnToAngle extends CommandBase {
+public class TurnToAngle extends Command {
 
     private Swerve swerve;
     private boolean isRelative;

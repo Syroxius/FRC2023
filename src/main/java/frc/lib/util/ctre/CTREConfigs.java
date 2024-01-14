@@ -2,9 +2,9 @@ package frc.lib.util.ctre;
 
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
-import com.ctre.phoenix.sensors.AbsoluteSensorRange;
-import com.ctre.phoenix.sensors.CANCoderConfiguration;
-import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange; // will be removed in 2025
+import com.ctre.phoenix.sensors.CANCoderConfiguration; // will be removed in 2025
+import com.ctre.phoenix.sensors.SensorInitializationStrategy; // will be removed in 2025
 import com.ctre.phoenix.sensors.SensorTimeBase;
 import frc.robot.Constants;
 
